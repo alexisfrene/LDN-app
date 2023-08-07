@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Image, View, ScrollView, Text, Pressable } from 'react-native';
-import { ProducsForm } from '../../components/forms/ProducsForm';
 import { supabase } from '../../lib/supabse';
 const downloadAvatar = (path) => {
   const { data: publicUrl } = supabase.storage
