@@ -1,12 +1,17 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import 'react-native-url-polyfill/auto';
+import { PersistGate } from 'redux-persist/integration/react';
 import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { LoginScreen, HomeScreen, NewProducsScreen } from './views';
 import { persistor, store } from './redux';
-import { PersistGate } from 'redux-persist/integration/react';
+import {
+  LoginScreen,
+  HomeScreen,
+  NewProducsScreen,
+  ListOfProductsScreen,
+} from './views';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +27,10 @@ function App() {
               <Stack.Screen
                 name="Crear Producto"
                 component={NewProducsScreen}
+              />
+              <Stack.Screen
+                name="Lista de productos"
+                component={ListOfProductsScreen}
               />
             </Stack.Navigator>
           </NavigationContainer>

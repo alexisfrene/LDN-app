@@ -1,5 +1,5 @@
 import { HomeScreen } from './Home';
 import { LoginScreen } from './Login';
 import { NewProducsScreen } from './NewProducs';
-
-export { HomeScreen, LoginScreen, NewProducsScreen };
+import { ListOfProductsScreen } from './ListOfProducts';
+export { HomeScreen, LoginScreen, NewProducsScreen, ListOfProductsScreen };
