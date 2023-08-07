@@ -3,9 +3,7 @@ import { Auth } from '../../components';
 import { useSelector } from 'react-redux';
 
 export const LoginScreen = ({ navigation }) => {
-  const {
-    login: { infoUser },
-  } = useSelector((state) => state);
+  const infoUser = useSelector((state) => state.login.infoUser);
 
   useEffect(() => {
     if (infoUser?.aud === 'authenticated') {

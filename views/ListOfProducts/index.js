@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, ScrollView, Text, Image, Pressable } from 'react-native';
+import { View, ScrollView, Text, Image, Pressable, Alert } from 'react-native';
 import {
   MaterialCommunityIcons,
   Ionicons,
@@ -9,6 +9,7 @@ import {
 } from '@expo/vector-icons';
 import { supabase } from '../../lib/supabse';
 import { LinearGradient } from 'expo-linear-gradient';
+import { producsCategory } from '../../mocks';
 const pantalones = require('../../assets/pantalones.png');
 const collar = require('../../assets/collar.png');
 const elipsis = require('../../assets/elipsis.png');
@@ -23,21 +24,42 @@ const downloadAvatar = (path) => {
 };
 export const ListOfProductsScreen = () => {
   const [producs, setProducs] = useState(false);
-  useEffect(() => {
-    const fetchPosts = async () => {
+  // useEffect(() => {
+  //   const fetchPosts = async () => {
+  //     const { data, error } = await supabase.from('ldn_producs').select('*');
+  //     if (error) {
+  //       console.log(error);
+  //     } else {
+  //       setProducs(data);
+  //     }
+  //   };
+  //   fetchPosts();
+  // }, []);
+
+  const handlePress = async (params) => {
+    if (params === 'all') {
       const { data, error } = await supabase.from('ldn_producs').select('*');
       if (error) {
         console.log(error);
       } else {
         setProducs(data);
       }
-    };
-    fetchPosts();
-  }, []);
+    } else {
+      const { data, error } = await supabase
+        .from('ldn_producs')
+        .select('*')
+        .eq('produc_category', params);
+      if (error) {
+        console.log(error);
+      } else {
+        setProducs(data);
+      }
+    }
+  };
 
   return (
     <ScrollView>
-      {producs ? (
+      {producs?.length ? (
         <View className="bg-slate-200 flex flex-row flex-wrap  mb-52 justify-start">
           {producs.length &&
             producs.map((producs, i) => {
@@ -57,26 +79,38 @@ export const ListOfProductsScreen = () => {
       ) : (
         <LinearGradient colors={['#fdfac7', '#fc930a']} className="flex-1">
           <View className="p-2">
-            <CardCategory title="Ver todos">
+            <CardCategory title="Ver todos" onPress={() => handlePress('all')}>
               <Image source={todo} className="h-16 w-16 ml-1" />
             </CardCategory>
-            <CardCategory title="Zapatillas">
+            <CardCategory
+              title="Zapatillas"
+              onPress={() => handlePress('sneakers')}
+            >
               <MaterialCommunityIcons
                 name="shoe-sneaker"
                 size={64}
                 color="black"
               />
             </CardCategory>
-            <CardCategory title="Remeras">
+            <CardCategory
+              title="Remeras"
+              onPress={() => handlePress('t-shirts')}
+            >
               <Ionicons name="shirt" size={64} color="black" />
             </CardCategory>
-            <CardCategory title="Pantalones">
+            <CardCategory
+              title="Pantalones"
+              onPress={() => handlePress('pants')}
+            >
               <Image source={pantalones} className="h-16 w-16 ml-1" />
             </CardCategory>
-            <CardCategory title="Accesorios">
+            <CardCategory
+              title="Accesorios"
+              onPress={() => handlePress('accessories')}
+            >
               <Image source={collar} className="h-16 w-16 ml-1" />
             </CardCategory>
-            <CardCategory title="Otros">
+            <CardCategory title="Otros" onPress={() => handlePress('other')}>
               <Image source={elipsis} className="h-16 w-16 ml-1" />
             </CardCategory>
           </View>
@@ -86,10 +120,13 @@ export const ListOfProductsScreen = () => {
   );
 };
 
-const CardCategory = ({ title, children }) => {
+const CardCategory = ({ title, children, onPress }) => {
   return (
     <LinearGradient colors={['#fdfac7', '#fc930a']} className="flex-1">
-      <Pressable className="active:bg-amber-500 rounded-2xl m-1">
+      <Pressable
+        className="active:bg-amber-500 rounded-2xl m-1"
+        onPress={onPress}
+      >
         <View className="h-32 overflow-hidden">
           <Text className="text-3xl font-semibold tracking-widest text-blue-800 text-center mt-2">
             {title}

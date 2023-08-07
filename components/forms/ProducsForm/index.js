@@ -19,36 +19,16 @@ import { pickImage } from '../../../lib/imagePicker';
 import { ImageViewer } from '../../commons';
 import { useSubmit } from './useSubmit';
 import { useSelector } from 'react-redux';
-
-const ggg = {
-  _persist: { rehydrated: true, version: -1 },
-  commons: { isLogged: false, isLoggedIn: false, loading: false },
-  config: { params: [] },
-  home: { home: [] },
-  login: {
-    infoUser: {
-      access_token:
-        'eyJhbGciOiJIUzI1NiIsImtpZCI6IjdTWVpjUnNrWlpPMzNaVzIiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNjkxMzkyNzcxLCJpYXQiOjE2OTEzODkxNzEsImlzcyI6Imh0dHBzOi8venN3aWFlaGFnY3J2dnV2bHhzbWcuc3VwYWJhc2UuY28vYXV0aC92MSIsInN1YiI6IjlmZWQ1ODJmLTFkNTAtNGU5OS1hYjk4LTE1NzJhZTJlNTEyMSIsImVtYWlsIjoiYWxleGlzZnJlbmVAZ21haWwuY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6e30sInJvbGUiOiJhdXRoZW50aWNhdGVkIiwiYWFsIjoiYWFsMSIsImFtciI6W3sibWV0aG9kIjoicGFzc3dvcmQiLCJ0aW1lc3RhbXAiOjE2OTEzODkxNzF9XSwic2Vzc2lvbl9pZCI6IjEyNWU0NWQzLWQ2MWYtNDdhNS1hMmEyLWYzM2E2ZWNkM2ViYSJ9.nTNPSnbIoeqooi7EMmoc8d2q8sLyQqdZ3VeywjRlaWM',
-      aud: 'authenticated',
-      email: 'alexisfrene@gmail.com',
-      id: '9fed582f-1d50-4e99-ab98-1572ae2e5121',
-      phone: '',
-      role: 'authenticated',
-    },
-  },
-};
+import { Dialog } from 'react-native-elements';
 
 const imageDafult = require('../../../assets/not_image.png');
 
 export const ProducsForm = () => {
+  const [succefull, setSuccefull] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [openCamera, setOpenCamera] = useState(false);
-  const [checkedItems, setCheckedItems] = useState('');
-  const {
-    login: {
-      infoUser: { id },
-    },
-  } = useSelector((state) => state);
+  const [checkedItems, setCheckedItems] = useState('other');
+  const idUser = useSelector((state) => state.login.infoUser.id);
   const { initialValues } = useForm();
   const handlerCheckbox = (e, values) => {
     setCheckedItems(e);
@@ -96,7 +76,10 @@ export const ProducsForm = () => {
               selectedImage={image}
             />
           </View>
-          <Formik initialValues={initialValues} onSubmit={useSubmit(id)}>
+          <Formik
+            initialValues={initialValues}
+            onSubmit={useSubmit(idUser, setSuccefull)}
+          >
             {({ handleChange, handleBlur, handleSubmit, values }) => (
               <View className="bg-blue-100 h-full">
                 {openCamera ? (
@@ -176,6 +159,15 @@ export const ProducsForm = () => {
                         Saca una foto
                       </Text>
                     </Pressable>
+                    <Dialog
+                      isVisible={succefull}
+                      onBackdropPress={() => setSuccefull(false)}
+                    >
+                      <Dialog.Title title="Producdo creado exitosamente" />
+                      <Text>
+                        Su producto a sido creado , puedes seguir creando mas
+                      </Text>
+                    </Dialog>
 
                     <Modal
                       animationType="slide"
@@ -232,35 +224,3 @@ export const ProducsForm = () => {
     </View>
   );
 };
-
-// const AddProducsForm = ({ DDD }) => {
-//   const [producsName, setProducsName] = useState('');
-//   const [imageSupa, setImageSupa] = useState('');
-
-//   return (
-//     <View>
-//       <Text>Agrega un producto nuevo</Text>
-//       {/* <TextInput value={producsName} onChangeText={setProducsName} />
-//       <TouchableOpacity
-//         onPress={pickImage}
-//         style={{
-//           width: 320,
-//           height: 440,
-//           borderRadius: 18,
-//         }}
-//       >
-//         <ImageViewer
-//           placeholderImageSource={imageDafult}
-//           selectedImage={imageSupa}
-//         />
-//       </TouchableOpacity>
-//       <Button
-//         title="Publicar"
-//         onPress={() => {
-//           DDD(producsName, imageSupa);
-//           setProducsName("");
-//         }}
-//       /> */}
-//     </View>
-//   );
-// };

@@ -10,7 +10,7 @@ export const setNewProduc = createAsyncThunk(
   async (spec) => {
     try {
       const res = await uploadProduc(spec);
-      console.log(res);
+      return res.status;
     } catch (error) {
       console.log('producs/setNewProduc', error);
     }

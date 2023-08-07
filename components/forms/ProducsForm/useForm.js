@@ -27,7 +27,7 @@ function getInitialValues() {
   const initialValues = {
     name: '',
     description: '',
-    price: 1,
+    price: '1',
     color: null,
     category: 'other',
     image_url: null,

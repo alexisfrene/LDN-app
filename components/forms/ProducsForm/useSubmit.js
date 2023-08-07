@@ -1,11 +1,15 @@
 import { useDispatch } from 'react-redux';
 import { setImageProduc, setNewProduc } from '../../../redux/slices';
 
-export function useSubmit(id) {
+export function useSubmit(id, setSuccefull) {
   const dispatch = useDispatch();
-  return async (spec) => {
+  return async (spec, { resetForm }) => {
     try {
-      await axiosPromise({ ...spec, id }, dispatch);
+      const status = await axiosPromise({ ...spec, id }, dispatch);
+      if (status.payload === 201) {
+        setSuccefull(true);
+        resetForm();
+      }
     } catch (error) {
       console.log('FORM NEW PRODUC', error);
     }
@@ -42,5 +46,6 @@ function transformSpec(spec) {
     produc_stock: 10,
     produc_discount: 'asds',
   };
+
   return apiSpec;
 }

@@ -3,7 +3,7 @@ export const producsCategory = [
   { type: 'pants', title: 'Pantalones' },
   { type: 'sneakers', title: 'Zapatillas' },
   { type: 'accessories', title: 'Accesorios' },
-  { type: 'others', title: 'Otros' },
+  { type: 'other', title: 'Otros' },
 ];
 
 export const newProduc = {
