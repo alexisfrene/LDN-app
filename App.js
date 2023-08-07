@@ -4,7 +4,7 @@ import 'react-native-url-polyfill/auto';
 import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { LoginScreen, HomeScreen, ProducsScreen } from './views';
+import { LoginScreen, HomeScreen, NewProducsScreen } from './views';
 import { persistor, store } from './redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
@@ -19,7 +19,10 @@ function App() {
             <Stack.Navigator>
               <Stack.Screen name="Login" component={LoginScreen} />
               <Stack.Screen name="Inicio" component={HomeScreen} />
-              <Stack.Screen name="Crear Producto" component={ProducsScreen} />
+              <Stack.Screen
+                name="Crear Producto"
+                component={NewProducsScreen}
+              />
             </Stack.Navigator>
           </NavigationContainer>
         </SafeAreaProvider>
