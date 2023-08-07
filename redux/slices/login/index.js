@@ -3,24 +3,21 @@ import { signInWithEmail } from '../../../services';
 import { supabase } from '../../../lib/supabse';
 
 const initialState = {
-  token: null,
-  user: null,
-  permissions: null,
+  infoUser: {},
 };
 
 export const autoLogin = createAsyncThunk(
   'login/autoLogin',
   async (setSession) => {
-    const ddd = await supabase.auth
-      .getSession()
-      .then(({ data: { session } }) => {
-        setSession(session);
-      });
-
-    const fff = await supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-    console.log({ ddd, fff });
+    //   const ddd = await supabase.auth
+    //     .getSession()
+    //     .then(({ data: { session } }) => {
+    //       setSession(session);
+    //     });
+    //   const fff = await supabase.auth.onAuthStateChange((_event, session) => {
+    //     setSession(session);
+    //   });
+    //   console.log({ ddd, fff });
   },
 );
 
@@ -33,14 +30,12 @@ export const setLogin = createAsyncThunk('login/setLogin', async (params) => {
       },
     } = await signInWithEmail(params);
     return {
-      data: {
-        access_token,
-        email,
-        id,
-        role,
-        phone,
-        aud,
-      },
+      access_token,
+      email,
+      id,
+      role,
+      phone,
+      aud,
     };
   } catch (error) {
     console.log('ERROR SETLOGIN', error);
@@ -53,9 +48,8 @@ export const loginSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(setLogin.fulfilled, (state, action) => {
-      const { data } = action.payload;
-      state.user = data;
-      state.token = data.access_token;
+      const data = action.payload;
+      state.infoUser = data;
     });
   },
 });

@@ -4,15 +4,14 @@ import { useSelector } from 'react-redux';
 
 export const LoginScreen = ({ navigation }) => {
   const {
-    login: { token },
-    commons: { isLoggedIn },
+    login: { infoUser },
   } = useSelector((state) => state);
 
   useEffect(() => {
-    if (token || isLoggedIn) {
+    if (infoUser?.aud === 'authenticated') {
       navigation.navigate('Inicio');
     }
-  }, [token]);
+  }, [infoUser]);
 
   return <Auth />;
 };

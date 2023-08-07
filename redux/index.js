@@ -12,7 +12,7 @@ import {
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['login', 'home'],
+  // whitelist: ['login', 'home'],
 };
 
 const rootReducer = combineReducers({

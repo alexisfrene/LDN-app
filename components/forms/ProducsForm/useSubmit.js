@@ -1,49 +1,46 @@
-import { supabase } from '../../../lib/supabse';
-export async function useSubmit(values) {
-  const { name, description, price, color, category, image_url } = values;
-  try {
-    const { formData, filePath } = formatUrl(image_url, category);
-    let res;
+import { useDispatch } from 'react-redux';
+import { setImageProduc, setNewProduc } from '../../../redux/slices';
 
-    if (formData && filePath) {
-      res = await supabase.storage
-        .from('ldn_bucket')
-        .upload(filePath, formData);
+export function useSubmit(id) {
+  const dispatch = useDispatch();
+  return async (spec) => {
+    try {
+      await axiosPromise({ ...spec, id }, dispatch);
+    } catch (error) {
+      console.log('FORM NEW PRODUC', error);
     }
-
-    await supabase.from('ldn_producs').insert({
-      name,
-      description,
-      price,
-      color,
-      category,
-      image_url: res?.data.path || '',
-    });
-  } catch (err) {
-    console.log('aca', err);
-  }
+  };
 }
 
-const formatUrl = (image_url, category) => {
-  if (!!image_url) {
-    const fileExt = image_url.split('.').pop();
-    const fileName = image_url.replace(/^.*[\\\/]/, '');
-    const filePath = `ldn-images/${category}/${Date.now()}.${fileExt}`;
-    const formData = new FormData();
-    const photo = {
-      uri: image_url,
-      name: fileName,
-      type: `image/${fileExt}`,
-    };
-    formData.append('file', photo);
+async function axiosPromise(spec, dispatch) {
+  const {
+    payload: { image_url },
+  } = await dispatch(setImageProduc(spec));
+  const apiSpec = transformSpec({
+    ...spec,
+    image_url,
+  });
+  const data = await dispatch(setNewProduc(apiSpec));
+  return data;
+}
 
-    return { formData, filePath };
-  } else {
-    return { formData: undefined, filePath: undefined };
-  }
-};
-//     const res = await supabase.storage
-//       .from("ldn_bucket")
-//       .upload(filePath, formData);
-//     console.log("RES SUPABASE", res);
-//   }
+function transformSpec(spec) {
+  const apiSpec = {
+    user: spec.id,
+    produc_name: spec.name,
+    produc_brand: spec.brand,
+    produc_style: spec.style,
+    produc_size: spec.size,
+    produc_description: spec.description,
+    produc_price: spec.price,
+    produc_color: spec.color,
+    produc_category: spec.category,
+    produc_image_url: spec.image_url,
+    produc_age: '',
+    produc_gender: 'genero',
+    produc_state: true,
+    produc_stock: 10,
+    produc_discount: 'asds',
+  };
+  return apiSpec;
+}

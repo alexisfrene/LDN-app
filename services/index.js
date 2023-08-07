@@ -1,2 +1,3 @@
 import { signInWithEmail } from './auth';
-export { signInWithEmail };
+import { uploadImageProduc, uploadProduc } from './newProduc';
+export { signInWithEmail, uploadImageProduc, uploadProduc };

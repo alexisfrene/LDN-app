@@ -11,19 +11,44 @@ import {
 } from 'react-native';
 import { Formik } from 'formik';
 import { CheckBox } from '@rneui/themed';
-import { Camera, CameraType } from 'expo-camera';
+import { Camera } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
 import { useForm } from './useForm';
 import { producsCategory } from '../../../mocks';
 import { pickImage } from '../../../lib/imagePicker';
 import { ImageViewer } from '../../commons';
 import { useSubmit } from './useSubmit';
+import { useSelector } from 'react-redux';
+
+const ggg = {
+  _persist: { rehydrated: true, version: -1 },
+  commons: { isLogged: false, isLoggedIn: false, loading: false },
+  config: { params: [] },
+  home: { home: [] },
+  login: {
+    infoUser: {
+      access_token:
+        'eyJhbGciOiJIUzI1NiIsImtpZCI6IjdTWVpjUnNrWlpPMzNaVzIiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNjkxMzkyNzcxLCJpYXQiOjE2OTEzODkxNzEsImlzcyI6Imh0dHBzOi8venN3aWFlaGFnY3J2dnV2bHhzbWcuc3VwYWJhc2UuY28vYXV0aC92MSIsInN1YiI6IjlmZWQ1ODJmLTFkNTAtNGU5OS1hYjk4LTE1NzJhZTJlNTEyMSIsImVtYWlsIjoiYWxleGlzZnJlbmVAZ21haWwuY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6e30sInJvbGUiOiJhdXRoZW50aWNhdGVkIiwiYWFsIjoiYWFsMSIsImFtciI6W3sibWV0aG9kIjoicGFzc3dvcmQiLCJ0aW1lc3RhbXAiOjE2OTEzODkxNzF9XSwic2Vzc2lvbl9pZCI6IjEyNWU0NWQzLWQ2MWYtNDdhNS1hMmEyLWYzM2E2ZWNkM2ViYSJ9.nTNPSnbIoeqooi7EMmoc8d2q8sLyQqdZ3VeywjRlaWM',
+      aud: 'authenticated',
+      email: 'alexisfrene@gmail.com',
+      id: '9fed582f-1d50-4e99-ab98-1572ae2e5121',
+      phone: '',
+      role: 'authenticated',
+    },
+  },
+};
+
 const imageDafult = require('../../../assets/not_image.png');
-export const ProducsForm = ({ setOpenFormProducs }) => {
+
+export const ProducsForm = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [openCamera, setOpenCamera] = useState(false);
   const [checkedItems, setCheckedItems] = useState('');
-
+  const {
+    login: {
+      infoUser: { id },
+    },
+  } = useSelector((state) => state);
   const { initialValues } = useForm();
   const handlerCheckbox = (e, values) => {
     setCheckedItems(e);
@@ -71,10 +96,7 @@ export const ProducsForm = ({ setOpenFormProducs }) => {
               selectedImage={image}
             />
           </View>
-          <Formik
-            initialValues={initialValues}
-            onSubmit={(values) => useSubmit(values)}
-          >
+          <Formik initialValues={initialValues} onSubmit={useSubmit(id)}>
             {({ handleChange, handleBlur, handleSubmit, values }) => (
               <View className="bg-blue-100 h-full">
                 {openCamera ? (
@@ -200,10 +222,6 @@ export const ProducsForm = ({ setOpenFormProducs }) => {
                       </View>
                     </Modal>
                     <Button onPress={handleSubmit} title="Crear producto" />
-                    <Button
-                      onPress={() => setOpenFormProducs(false)}
-                      title="Cancelar"
-                    />
                   </>
                 )}
               </View>

@@ -27,10 +27,10 @@ function getInitialValues() {
   const initialValues = {
     name: '',
     description: '',
-    price: '0',
+    price: 1,
     color: null,
-    category: '',
-    image_url: '',
+    category: 'other',
+    image_url: null,
   };
 
   return initialValues;
