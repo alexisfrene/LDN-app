@@ -1,10 +1,6 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import { Pressable, View, Text } from 'react-native';
 
-export const Card = () => {
-  return <div>Card</div>;
-};
-
 export const CardCategory = ({ title, children, onPress }) => {
   return (
     <LinearGradient colors={['#fdfac7', '#fc930a']} className="flex-1">

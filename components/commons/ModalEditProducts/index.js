@@ -1,12 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Dialog, Divider, Icon, ListItem } from 'react-native-elements';
 import { Text, Image, View } from 'react-native';
-
-const user = {
-  produc_code: 3,
-  produc_description: '',
-  user: null,
-};
 
 export const ModalEditProducts = ({ produc, handle, setHandle }) => {
   const [expanded, setExpanded] = useState(false);
