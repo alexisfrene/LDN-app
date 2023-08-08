@@ -1,5 +1,7 @@
 import { Auth } from './Auth';
 import { Account } from './Account';
+import { TakePicture } from './Camera';
+import { CircleButton } from './CircleButton';
 import {
   Button,
   Checkbox,
@@ -8,6 +10,14 @@ import {
   EmojiSticker,
   IconButton,
   ImageViewer,
+  ImageMineature,
+  ModalEditProducts,
+  Card,
+  CardCategory,
+  Title,
+  ModalCategory,
+  SelectedCategory,
+  ModalSuccefull,
 } from './commons';
 export {
   Auth,
@@ -19,4 +29,14 @@ export {
   EmojiSticker,
   IconButton,
   ImageViewer,
+  ImageMineature,
+  ModalEditProducts,
+  Card,
+  CardCategory,
+  SelectedCategory,
+  Title,
+  ModalCategory,
+  ModalSuccefull,
+  TakePicture,
+  CircleButton,
 };

@@ -1,3 +1,16 @@
 import { signInWithEmail } from './auth';
-import { uploadImageProduc, uploadProduc } from './newProduc';
-export { signInWithEmail, uploadImageProduc, uploadProduc };
+import {
+  uploadImageProduc,
+  uploadProduc,
+  downloadProducImage,
+  getCategoryProducs,
+  getAllProducs,
+} from './producs';
+export {
+  signInWithEmail,
+  uploadImageProduc,
+  uploadProduc,
+  downloadProducImage,
+  getCategoryProducs,
+  getAllProducs,
+};

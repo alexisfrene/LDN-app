@@ -25,9 +25,14 @@ export function useForm() {
 
 function getInitialValues() {
   const initialValues = {
+    gender: '',
+    age: '',
+    style: '',
+    brand: '',
+    size: '',
     name: '',
     description: '',
-    price: '1',
+    price: '$ 1',
     color: null,
     category: 'other',
     image_url: null,

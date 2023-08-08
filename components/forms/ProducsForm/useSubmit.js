@@ -9,6 +9,8 @@ export function useSubmit(id, setSuccefull) {
       if (status.payload === 201) {
         setSuccefull(true);
         resetForm();
+      } else {
+        console.log('ERROR SUMBIT', status);
       }
     } catch (error) {
       console.log('FORM NEW PRODUC', error);
@@ -29,23 +31,19 @@ async function axiosPromise(spec, dispatch) {
 }
 
 function transformSpec(spec) {
+  spec.price = Number(spec.price.replace(/\$/g, ''));
   const apiSpec = {
     user: spec.id,
     produc_name: spec.name,
-    produc_brand: spec.brand,
-    produc_style: spec.style,
-    produc_size: spec.size,
-    produc_description: spec.description,
-    produc_price: spec.price,
-    produc_color: spec.color,
-    produc_category: spec.category,
-    produc_image_url: spec.image_url,
-    produc_age: '',
-    produc_gender: 'genero',
-    produc_state: true,
-    produc_stock: 10,
-    produc_discount: 'asds',
   };
+
+  for (let key in spec) {
+    if (!!spec[key]) {
+      if (key !== 'id') {
+        apiSpec['produc_' + key] = spec[key];
+      }
+    }
+  }
 
   return apiSpec;
 }
