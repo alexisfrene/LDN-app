@@ -5,6 +5,7 @@ import {
   downloadProducImage,
   getCategoryProducs,
   getAllProducs,
+  updateProduct,
 } from './producs';
 export {
   signInWithEmail,
@@ -13,4 +14,5 @@ export {
   downloadProducImage,
   getCategoryProducs,
   getAllProducs,
+  updateProduct,
 };

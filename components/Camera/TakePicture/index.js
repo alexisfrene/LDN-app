@@ -45,6 +45,8 @@ export const TakePicture = ({
       flashMode={flash}
       ref={cameraRef}
       className="h-[80vh] flex flex-col-reverse"
+      focusDepth={0.5}
+      pictureSize="1280x720"
     >
       <View className="flex flex-row justify-center">
         <CircleButton icon="photo-camera" onPress={() => takePicture(values)} />

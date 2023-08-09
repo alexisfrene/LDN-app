@@ -1,5 +1,6 @@
 import { Formik } from 'formik';
 import { useState } from 'react';
+import { object, string } from 'yup';
 import { useSelector } from 'react-redux';
 import { LinearGradient } from 'expo-linear-gradient';
 import { View, Pressable, ScrollView, Text } from 'react-native';
@@ -17,18 +18,18 @@ import {
   TakePicture,
 } from '../../../components';
 
-import { object, string, number, date, InferType } from 'yup';
-
 let userSchema = object({
   name: string().required('El nombre es obligatorio!'),
 });
 
 export const ProducsForm = () => {
   const [image, setImage] = useState();
+  const [disable, setDisable] = useState(false);
   const [succefull, setSuccefull] = useState(false);
   const [openCamera, setOpenCamera] = useState(false);
   const [modalCamera, setModalCamera] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+
   const idUser = useSelector((state) => state.login.infoUser.id);
   const { initialValues } = useForm();
 
@@ -50,17 +51,10 @@ export const ProducsForm = () => {
         )}
         <Formik
           initialValues={initialValues}
-          onSubmit={useSubmit(idUser, setSuccefull)}
+          onSubmit={useSubmit(idUser, setSuccefull, setDisable, setImage)}
           validationSchema={userSchema}
         >
-          {({
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            values,
-            errors,
-            touched,
-          }) => (
+          {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
             <View>
               {openCamera ? (
                 <TakePicture
@@ -99,7 +93,11 @@ export const ProducsForm = () => {
                       {errors.name}
                     </Text>
                   ) : null}
-                  <ButtonLDN onPress={handleSubmit} text="Crear producto" />
+                  <ButtonLDN
+                    onPress={handleSubmit}
+                    text="Crear producto"
+                    disable={disable}
+                  />
 
                   <ModalSuccefull
                     isVisible={modalCamera}
@@ -122,6 +120,7 @@ export const ProducsForm = () => {
                     modalVisible={modalVisible}
                     setModalVisible={setModalVisible}
                     values={values}
+                    searchValue="category"
                   />
                 </>
               )}

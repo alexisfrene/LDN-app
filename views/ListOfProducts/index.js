@@ -4,17 +4,20 @@ import {
   ImageMineature,
   ModalEditProducts,
   SelectedCategory,
+  Title,
 } from '../../components';
 import {
   getAllProducs,
   getCategoryProducs,
   downloadProducImage,
 } from '../../services';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export const ListOfProductsScreen = () => {
+  const [producs, setProducs] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [selectedProduc, setSelectedProduc] = useState(null);
-  const [producs, setProducs] = useState(false);
+
   const handlePress = async (category) => {
     if (category === 'all') {
       const { data, error } = await getAllProducs();
@@ -34,29 +37,37 @@ export const ListOfProductsScreen = () => {
 
   return (
     <ScrollView>
-      {producs?.length ? (
-        <View className="bg-slate-200 flex flex-row flex-wrap mb-52 justify-evenly">
-          {producs.length &&
-            producs.map((producs, i) => {
-              let url = downloadProducImage(producs.produc_image_url);
-              return (
-                <ImageMineature
-                  title={producs.produc_name}
-                  imageURL={url.publicUrl}
-                  onPress={() => openEditModal(producs.id, url)}
-                  key={i}
-                />
-              );
-            })}
-        </View>
-      ) : (
-        <SelectedCategory handlePress={handlePress} />
-      )}
-      <ModalEditProducts
-        produc={selectedProduc}
-        handle={openEdit}
-        setHandle={setOpenEdit}
-      />
+      <LinearGradient
+        colors={['#fdfac7', '#fc930a']}
+        className="flex-1 px-1 min-h-screen"
+      >
+        {producs?.length ? (
+          <>
+            <Title text="Lista de productos" />
+            <View className=" flex flex-row flex-wrap mb-10 justify-evenly">
+              {producs.length &&
+                producs.map((producs, i) => {
+                  let url = downloadProducImage(producs.produc_image_url);
+                  return (
+                    <ImageMineature
+                      title={producs.produc_name}
+                      imageURL={url.publicUrl}
+                      onPress={() => openEditModal(producs.id, url)}
+                      key={i}
+                    />
+                  );
+                })}
+            </View>
+          </>
+        ) : (
+          <SelectedCategory handlePress={handlePress} />
+        )}
+        <ModalEditProducts
+          produc={selectedProduc}
+          handle={openEdit}
+          setHandle={setOpenEdit}
+        />
+      </LinearGradient>
     </ScrollView>
   );
 };

@@ -1,9 +1,26 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { uploadImageProduc, uploadProduc } from '../../../services';
+import {
+  uploadImageProduc,
+  uploadProduc,
+  updateProduct,
+} from '../../../services';
 
 const initialState = {
   producs: [],
 };
+
+export const updateProduc = createAsyncThunk(
+  'producs/updateProduc',
+  async (spec) => {
+    try {
+      const res = await updateProduct(spec);
+      console.log('reduxxxx', res);
+      return res.status;
+    } catch (error) {
+      console.log('producs/updateProduc', error);
+    }
+  },
+);
 
 export const setNewProduc = createAsyncThunk(
   'producs/setNewProduc',

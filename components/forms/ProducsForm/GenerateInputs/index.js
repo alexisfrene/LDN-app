@@ -13,7 +13,9 @@ export const GenerateInputs = ({
 }) => {
   return (
     <View className="flex flex-row my-1 bg-amber-300">
-      <Text className="text-base bg-amber-400 w-44">{title}</Text>
+      <Text className="text-base font-bold pl-1 bg-amber-400 w-44">
+        {title}
+      </Text>
       <TextInput
         onChangeText={handleChange(name)}
         onBlur={handleBlur(name)}

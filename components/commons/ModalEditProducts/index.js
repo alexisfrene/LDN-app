@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import { Dialog, Divider, Icon, ListItem } from 'react-native-elements';
+import { MaterialIcons } from '@expo/vector-icons';
 import { Text, Image, View } from 'react-native';
+import { EditProducsForm } from '../../forms';
 
 export const ModalEditProducts = ({ produc, handle, setHandle }) => {
   const [expanded, setExpanded] = useState(false);
+  const [openEdit, setOpenEdit] = useState(false);
   const mainInfo = [
     { textLeft: 'Categoria :', textRigth: produc?.produc_category },
     { textLeft: 'Precio :', textRigth: `$ ${produc?.produc_price}` },
@@ -22,7 +25,6 @@ export const ModalEditProducts = ({ produc, handle, setHandle }) => {
       textLeft: 'Estado :',
       textRigth: produc?.produc_state ? 'Disponible' : 'Vendido',
     },
-    { textLeft: 'Descuento :', textRigth: produc?.produc_discount },
     { textLeft: 'Unidades :', textRigth: produc?.produc_stock },
     {
       textLeft: 'Estilo :',
@@ -32,50 +34,70 @@ export const ModalEditProducts = ({ produc, handle, setHandle }) => {
   ];
 
   return (
-    <View className="w-96 bg-red-200">
-      <Dialog isVisible={handle} onBackdropPress={() => setHandle(false)}>
-        <Dialog.Title
-          title={`${produc?.produc_name}(${produc?.produc_code})`}
+    <Dialog isVisible={handle} onBackdropPress={() => setHandle(false)}>
+      {openEdit ? (
+        <EditProducsForm
+          produc={produc}
+          setOpenEdit={setOpenEdit}
+          setHandle={setHandle}
         />
-        <Image src={produc?.url.publicUrl} className="h-64 w-64" />
-        {mainInfo.map((item, i) => {
-          return (
-            <InfoRowDialog
-              key={i}
-              textLeft={item.textLeft}
-              textRigth={item.textRigth}
+      ) : (
+        <>
+          <View className="flex flex-row justify-between">
+            <Dialog.Title
+              title={`${produc?.produc_name}(${produc?.produc_code})`}
             />
-          );
-        })}
-        <ListItem.Accordion
-          content={
-            <>
+            <MaterialIcons
+              name="edit"
+              size={24}
+              color="black"
+              onPress={() => setOpenEdit(true)}
+            />
+          </View>
+
+          <View style={{ alignItems: 'center' }}>
+            <Image src={produc?.url.publicUrl} className="h-[250] w-[250]" />
+          </View>
+
+          {mainInfo.map((item, i) => {
+            return (
+              <InfoRowDialog
+                key={i}
+                textLeft={item.textLeft}
+                textRigth={item.textRigth}
+              />
+            );
+          })}
+          <ListItem.Accordion
+            content={
+              <>
+                <ListItem.Content>
+                  <ListItem.Title>Mas informacion</ListItem.Title>
+                </ListItem.Content>
+              </>
+            }
+            isExpanded={expanded}
+            onPress={() => {
+              setExpanded(!expanded);
+            }}
+          >
+            <ListItem onPress={() => console.log('fff')} bottomDivider>
               <ListItem.Content>
-                <ListItem.Title>Mas informacion</ListItem.Title>
+                {moreInfo.map((item, i) => {
+                  return (
+                    <InfoRowDialog
+                      key={i}
+                      textLeft={item.textLeft}
+                      textRigth={item.textRigth}
+                    />
+                  );
+                })}
               </ListItem.Content>
-            </>
-          }
-          isExpanded={expanded}
-          onPress={() => {
-            setExpanded(!expanded);
-          }}
-        >
-          <ListItem onPress={() => console.log('fff')} bottomDivider>
-            <ListItem.Content>
-              {moreInfo.map((item, i) => {
-                return (
-                  <InfoRowDialog
-                    key={i}
-                    textLeft={item.textLeft}
-                    textRigth={item.textRigth}
-                  />
-                );
-              })}
-            </ListItem.Content>
-          </ListItem>
-        </ListItem.Accordion>
-      </Dialog>
-    </View>
+            </ListItem>
+          </ListItem.Accordion>
+        </>
+      )}
+    </Dialog>
   );
 };
 

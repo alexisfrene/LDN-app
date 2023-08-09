@@ -12,7 +12,12 @@ export const CardCategory = ({ title, children, onPress }) => {
           <Text className="text-3xl font-semibold tracking-widest text-blue-800 text-center mt-2">
             {title}
           </Text>
-          <View className=" rounded-full bg-amber-500 w-20 ml-36 p-1">
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
             {children}
           </View>
         </View>

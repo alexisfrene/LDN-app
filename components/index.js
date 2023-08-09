@@ -2,6 +2,7 @@ import { Auth } from './Auth';
 import { Account } from './Account';
 import { TakePicture } from './Camera';
 import { CircleButton } from './CircleButton';
+import { EditProducsForm, ProducsForm } from './forms';
 import {
   Button,
   Checkbox,
@@ -12,7 +13,6 @@ import {
   ImageViewer,
   ImageMineature,
   ModalEditProducts,
-  Card,
   CardCategory,
   Title,
   ModalCategory,
@@ -31,7 +31,6 @@ export {
   ImageViewer,
   ImageMineature,
   ModalEditProducts,
-  Card,
   CardCategory,
   SelectedCategory,
   Title,
@@ -39,4 +38,6 @@ export {
   ModalSuccefull,
   TakePicture,
   CircleButton,
+  EditProducsForm,
+  ProducsForm,
 };

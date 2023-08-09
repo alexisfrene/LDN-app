@@ -1,10 +1,11 @@
 import { useDispatch } from 'react-redux';
 import { setImageProduc, setNewProduc } from '../../../redux/slices';
 
-export function useSubmit(id, setSuccefull) {
+export function useSubmit(id, setSuccefull, setDisable, setImage) {
   const dispatch = useDispatch();
   return async (spec, { resetForm }) => {
     try {
+      setDisable(true);
       const status = await axiosPromise({ ...spec, id }, dispatch);
       if (status.payload === 201) {
         setSuccefull(true);
@@ -14,6 +15,9 @@ export function useSubmit(id, setSuccefull) {
       }
     } catch (error) {
       console.log('FORM NEW PRODUC', error);
+    } finally {
+      setImage(null);
+      setDisable(false);
     }
   };
 }
