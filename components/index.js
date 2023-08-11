@@ -1,17 +1,8 @@
-import { Auth } from './Auth';
-import { Account } from './Account';
-import {
-  Button,
-  Checkbox,
-  EmojiList,
-  EmojiPicker,
-  EmojiSticker,
-  IconButton,
-  ImageViewer,
-} from './commons';
+export { Auth } from './Auth';
+export { Account } from './Account';
+export { TakePicture } from './Camera';
+export { CircleButton } from './CircleButton';
 export {
-  Auth,
-  Account,
   Button,
   Checkbox,
   EmojiList,
@@ -19,4 +10,10 @@ export {
   EmojiSticker,
   IconButton,
   ImageViewer,
-};
+  ImageMineature,
+  CardCategory,
+  Title,
+  ModalCategory,
+  SelectedCategory,
+  ModalSuccefull,
+} from './commons';

@@ -5,7 +5,30 @@ export const producsCategory = [
   { type: 'accessories', title: 'Accesorios' },
   { type: 'other', title: 'Otros' },
 ];
-
+export const inputProducs = [
+  {
+    name: 'name',
+    placeholder: 'Zapatilla Deportiva Nike..',
+    title: 'Nombre del producto :',
+  },
+  {
+    name: 'price',
+    placeholder: '$ 7000',
+    title: 'Precio :',
+    type: 'numeric',
+  },
+  { name: 'size', placeholder: 'XL ...', title: 'Numero / Talle :' },
+  { name: 'brand', placeholder: 'Nike ...', title: 'Marca :' },
+  { name: 'color', placeholder: 'Amarrillo con blanco...', title: 'Color :' },
+  { name: 'style', placeholder: 'Deportivas ...', title: 'Estilo :' },
+  { name: 'age', placeholder: 'Adulto / Niño ...', title: 'Edades :' },
+  { name: 'gender', placeholder: 'Masculino/Femenino ...', title: 'Genero :' },
+  {
+    name: 'description',
+    placeholder: 'Zapatilla modelo ancho...',
+    title: 'Descripcion :',
+  },
+];
 export const newProduc = {
   user: 'id del usuario',
   produc_name: 'Nombre del producto OBLIGATORIO',

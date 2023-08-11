@@ -1,2 +1,2 @@
-import { producsCategory } from './producs';
-export { producsCategory };
+import { producsCategory, inputProducs } from './producs';
+export { producsCategory, inputProducs };

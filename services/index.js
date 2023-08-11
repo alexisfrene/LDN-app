@@ -1,3 +1,10 @@
-import { signInWithEmail } from './auth';
-import { uploadImageProduc, uploadProduc } from './newProduc';
-export { signInWithEmail, uploadImageProduc, uploadProduc };
+export { signInWithEmail } from './auth';
+export {
+  uploadImageProduc,
+  uploadProduc,
+  downloadProducImage,
+  getCategoryProducs,
+  getAllProducs,
+  updateProduct,
+  filterCategoryProduc,
+} from './producs';
