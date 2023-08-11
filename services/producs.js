@@ -35,3 +35,11 @@ export const updateProduct = async (spec) => {
 
   return await supabase.from('ldn_producs').update(editColum).eq('id', id);
 };
+
+export const filterCategoryProduc = async (category) => {
+  if (category === 'all') {
+    return await getAllProducs();
+  } else {
+    return await getCategoryProducs(category);
+  }
+};

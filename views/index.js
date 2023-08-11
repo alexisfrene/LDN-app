@@ -1,5 +1,4 @@
-import { HomeScreen } from './Home';
-import { LoginScreen } from './Login';
-import { NewProducsScreen } from './NewProducs';
-import { ListOfProductsScreen } from './ListOfProducts';
-export { HomeScreen, LoginScreen, NewProducsScreen, ListOfProductsScreen };
+export { HomeScreen } from './Home';
+export { LoginScreen } from './Login';
+export { NewProducsScreen } from './NewProducs';
+export { ListOfProductsScreen } from './ListOfProducts';

@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { View, Text, TextInput, Pressable } from 'react-native';
-import { Button, ModalCategory, ModalSuccefull } from '../../commons';
-import { useForm } from './useForm';
 import { Formik } from 'formik';
+import { View, Text, TextInput, Pressable } from 'react-native';
+import { Button, ModalCategory, ModalSuccefull } from '../../../components';
+import { useForm } from './useForm';
 import { useSubmit } from './useSubmit';
 
 export const EditProducsForm = ({ produc, setOpenEdit, setHandle }) => {

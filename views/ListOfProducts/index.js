@@ -1,37 +1,36 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { View, ScrollView } from 'react-native';
-import {
-  ImageMineature,
-  ModalEditProducts,
-  SelectedCategory,
-  Title,
-} from '../../components';
-import {
-  getAllProducs,
-  getCategoryProducs,
-  downloadProducImage,
-} from '../../services';
 import { LinearGradient } from 'expo-linear-gradient';
+import { downloadImage, filterCategoryProducts } from '../../redux/slices';
+import { ModalEditProducts } from '../../components/commons';
+import { ImageMineature, SelectedCategory, Title } from '../../components';
 
 export const ListOfProductsScreen = () => {
   const [producs, setProducs] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
+  const dispatch = useDispatch();
   const [selectedProduc, setSelectedProduc] = useState(null);
 
   const handlePress = async (category) => {
-    if (category === 'all') {
-      const { data, error } = await getAllProducs();
+    const {
+      payload: { data },
+    } = await dispatch(filterCategoryProducts(category));
 
-      return error ? console.log(error) : setProducs(data);
-    } else {
-      const { data, error } = await getCategoryProducs(category);
-
-      return error ? console.log(error) : setProducs(data);
-    }
+    const producsWithUrls = await Promise.all(
+      data.map(async (produc) => {
+        let { payload } = await dispatch(
+          downloadImage(produc.produc_image_url),
+        );
+        return { publicUrl: payload.publicUrl, ...produc };
+      }),
+    );
+    setSelectedProduc(producsWithUrls);
+    setProducs(producsWithUrls);
   };
-  const openEditModal = (id, url) => {
+  const openEditModal = (id) => {
     const select = producs.find((produc) => produc.id === id);
-    setSelectedProduc({ ...select, url });
+    setSelectedProduc({ ...select });
     setOpenEdit(true);
   };
 
@@ -41,18 +40,17 @@ export const ListOfProductsScreen = () => {
         colors={['#fdfac7', '#fc930a']}
         className="flex-1 px-1 min-h-screen"
       >
-        {producs?.length ? (
+        {producs?.length && producs[0]?.publicUrl ? (
           <>
             <Title text="Lista de productos" />
             <View className=" flex flex-row flex-wrap mb-10 justify-evenly">
               {producs.length &&
-                producs.map((producs, i) => {
-                  let url = downloadProducImage(producs.produc_image_url);
+                producs.map((product, i) => {
                   return (
                     <ImageMineature
-                      title={producs.produc_name}
-                      imageURL={url.publicUrl}
-                      onPress={() => openEditModal(producs.id, url)}
+                      title={product.produc_name}
+                      imageURL={product.publicUrl}
+                      onPress={() => openEditModal(product.id)}
                       key={i}
                     />
                   );

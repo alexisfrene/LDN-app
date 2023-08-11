@@ -6,7 +6,6 @@ export const GenerateInputs = ({
   handleBlur,
   values,
   name,
-  className,
   placeholder,
   type = 'default',
   title,
@@ -20,7 +19,7 @@ export const GenerateInputs = ({
         onChangeText={handleChange(name)}
         onBlur={handleBlur(name)}
         value={values[name]}
-        className={className}
+        className="my-1 h-full w-full"
         placeholder={placeholder}
         keyboardType={type}
       />

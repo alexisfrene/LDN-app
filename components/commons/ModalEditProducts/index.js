@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Dialog, Divider, Icon, ListItem } from 'react-native-elements';
+import { Dialog, Divider, ListItem } from 'react-native-elements';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Text, Image, View } from 'react-native';
 import { EditProducsForm } from '../../forms';
@@ -56,7 +56,7 @@ export const ModalEditProducts = ({ produc, handle, setHandle }) => {
           </View>
 
           <View style={{ alignItems: 'center' }}>
-            <Image src={produc?.url.publicUrl} className="h-[250] w-[250]" />
+            <Image src={produc?.publicUrl} className="h-[250] w-[250]" />
           </View>
 
           {mainInfo.map((item, i) => {

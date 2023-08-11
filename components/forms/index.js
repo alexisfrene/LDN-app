@@ -1,3 +1,2 @@
-import { EditProducsForm } from './EditProducsForm';
-import { ProducsForm } from './ProducsForm';
-export { EditProducsForm, ProducsForm };
+export { EditProducsForm } from './EditProducsForm';
+export { ProducsForm } from './ProducsForm';

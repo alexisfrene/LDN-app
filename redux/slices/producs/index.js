@@ -3,6 +3,8 @@ import {
   uploadImageProduc,
   uploadProduc,
   updateProduct,
+  filterCategoryProduc,
+  downloadProducImage,
 } from '../../../services';
 
 const initialState = {
@@ -14,7 +16,7 @@ export const updateProduc = createAsyncThunk(
   async (spec) => {
     try {
       const res = await updateProduct(spec);
-      console.log('reduxxxx', res);
+
       return res.status;
     } catch (error) {
       console.log('producs/updateProduc', error);
@@ -49,6 +51,30 @@ export const setImageProduc = createAsyncThunk(
       }
     } catch (err) {
       console.log('producs/setImageProduc', err);
+    }
+  },
+);
+
+export const filterCategoryProducts = createAsyncThunk(
+  'producs/filterCategoryProducts',
+  async (spec) => {
+    try {
+      const res = await filterCategoryProduc(spec);
+      return res;
+    } catch (error) {
+      console.log('producs/filterCategoryProducts', error);
+    }
+  },
+);
+
+export const downloadImage = createAsyncThunk(
+  'producs/downloadImage',
+  async (spec) => {
+    try {
+      const publicUrl = downloadProducImage(spec);
+      return publicUrl;
+    } catch (error) {
+      console.log('producs/downloadImage', error);
     }
   },
 );

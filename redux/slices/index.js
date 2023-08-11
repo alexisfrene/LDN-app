@@ -12,6 +12,8 @@ import producsSlice, {
   setNewProduc,
   setImageProduc,
   updateProduc,
+  filterCategoryProducts,
+  downloadImage,
 } from './producs';
 
 export {
@@ -33,4 +35,6 @@ export {
   setNewProduc,
   setImageProduc,
   updateProduc,
+  filterCategoryProducts,
+  downloadImage,
 };

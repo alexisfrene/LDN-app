@@ -7,7 +7,6 @@ export function useSubmit(producId, setSuccefull, setDisable) {
     try {
       setDisable(true);
       const status = await axiosPromise(spec, dispatch, producId);
-      console.log('STATUS', status, spec);
       if (status.payload === 204) {
         setSuccefull(true);
       } else {
@@ -23,7 +22,6 @@ export function useSubmit(producId, setSuccefull, setDisable) {
 
 async function axiosPromise(spec, dispatch, id) {
   const apiSpec = transformSpec(spec);
-  console.log('API SPEC', apiSpec);
   const data = await dispatch(updateProduc({ ...apiSpec, id }));
 
   return data;

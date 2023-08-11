@@ -73,7 +73,6 @@ export const ProducsForm = () => {
                       handleBlur={handleBlur}
                       values={values}
                       name={input.name}
-                      className="my-1"
                       placeholder={input.placeholder}
                       type={input?.type || 'default'}
                     />
@@ -96,7 +95,7 @@ export const ProducsForm = () => {
                   <ButtonLDN
                     onPress={handleSubmit}
                     text="Crear producto"
-                    disable={disable}
+                    disable={disable || !!errors.name}
                   />
 
                   <ModalSuccefull
