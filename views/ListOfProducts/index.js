@@ -1,18 +1,30 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { View, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { downloadImage, filterCategoryProducts } from '../../redux/slices';
-import { ModalEditProducts } from '../../components/commons';
-import { ImageMineature, SelectedCategory, Title } from '../../components';
+import {
+  downloadImage,
+  filterCategoryProducts,
+  startLoading,
+  stopLoading,
+} from '../../redux/slices';
+import {
+  Loading,
+  ImageMineature,
+  SelectedCategory,
+  Title,
+} from '../../components/commons';
+import { ModalEditProducts } from '../../components/commons/ModalEditProducts';
 
 export const ListOfProductsScreen = () => {
+  const [selectedProduc, setSelectedProduc] = useState(null);
   const [producs, setProducs] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const dispatch = useDispatch();
-  const [selectedProduc, setSelectedProduc] = useState(null);
+  const loading = useSelector((state) => state.commons.loading);
 
   const handlePress = async (category) => {
+    dispatch(startLoading());
     const {
       payload: { data },
     } = await dispatch(filterCategoryProducts(category));
@@ -25,6 +37,7 @@ export const ListOfProductsScreen = () => {
         return { publicUrl: payload.publicUrl, ...produc };
       }),
     );
+    dispatch(stopLoading());
     setSelectedProduc(producsWithUrls);
     setProducs(producsWithUrls);
   };
@@ -66,6 +79,7 @@ export const ListOfProductsScreen = () => {
           setHandle={setOpenEdit}
         />
       </LinearGradient>
+      <Loading isVisible={loading} />
     </ScrollView>
   );
 };

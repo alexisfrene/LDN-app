@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Auth } from '../../components';
+import { Auth } from '../../components/Auth';
 import { useSelector } from 'react-redux';
 
 export const LoginScreen = ({ navigation }) => {
-  const infoUser = useSelector((state) => state.login.infoUser);
+  const login = useSelector((state) => state.login);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (infoUser?.aud === 'authenticated') {
+    if (login?.infoUser?.aud === 'authenticated') {
       navigation.navigate('Inicio');
     }
-  }, [infoUser]);
+  }, [loading]);
 
-  return <Auth />;
+  return <Auth setLoading={setLoading} loading={loading} />;
 };

@@ -1,11 +1,17 @@
 import { useDispatch } from 'react-redux';
-import { setImageProduc, setNewProduc } from '../../../redux/slices';
+import {
+  setImageProduc,
+  setNewProduc,
+  startLoading,
+  stopLoading,
+} from '../../../redux/slices';
 
 export function useSubmit(id, setSuccefull, setDisable, setImage) {
   const dispatch = useDispatch();
   return async (spec, { resetForm }) => {
     try {
       setDisable(true);
+      dispatch(startLoading());
       const status = await axiosPromise({ ...spec, id }, dispatch);
       if (status.payload === 201) {
         setSuccefull(true);
@@ -18,6 +24,7 @@ export function useSubmit(id, setSuccefull, setDisable, setImage) {
     } finally {
       setImage(null);
       setDisable(false);
+      dispatch(stopLoading());
     }
   };
 }

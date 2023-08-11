@@ -1,7 +1,11 @@
 import { useState } from 'react';
 import { Formik } from 'formik';
 import { View, Text, TextInput, Pressable } from 'react-native';
-import { Button, ModalCategory, ModalSuccefull } from '../../../components';
+import {
+  Button,
+  ModalCategory,
+  ModalSuccefull,
+} from '../../../components/commons';
 import { useForm } from './useForm';
 import { useSubmit } from './useSubmit';
 

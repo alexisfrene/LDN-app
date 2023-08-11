@@ -2,14 +2,18 @@ import { supabase } from '../lib/supabse';
 import { formatUrl } from '../utils';
 
 export const getAllProducs = async () => {
-  return await supabase.from('ldn_producs').select('*');
+  return await supabase
+    .from('ldn_producs')
+    .select('*')
+    .not('produc_state', 'eq', false);
 };
 
 export const getCategoryProducs = async (category) => {
   return await supabase
     .from('ldn_producs')
     .select('*')
-    .eq('produc_category', category);
+    .eq('produc_category', category)
+    .not('produc_state', 'eq', false);
 };
 
 export const uploadImageProduc = async (image_url, category) => {

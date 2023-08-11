@@ -1,8 +1,10 @@
 import { Camera } from 'expo-camera';
-import { Text, View, Button } from 'react-native';
+import { Text, View } from 'react-native';
 import { useEffect, useRef, useState } from 'react';
 import * as MediaLibrary from 'expo-media-library';
 import { CircleButton } from '../../CircleButton';
+import { useDispatch } from 'react-redux';
+import { startLoading, stopLoading } from '../../../redux/slices';
 
 export const TakePicture = ({
   setOpenCamera,
@@ -13,16 +15,18 @@ export const TakePicture = ({
   const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
-
+  const dispatch = useDispatch();
   const cameraRef = useRef(null);
   const takePicture = async (values) => {
     if (cameraRef) {
       try {
+        dispatch(startLoading());
         const data = await cameraRef.current.takePictureAsync();
         setImage(data.uri);
         values.image_url = data.uri;
         setOpenCamera(false);
         closeModal(false);
+        dispatch(stopLoading());
       } catch (error) {
         console.log('ERROR CAMERA', error);
       }
@@ -45,8 +49,7 @@ export const TakePicture = ({
       flashMode={flash}
       ref={cameraRef}
       className="h-[80vh] flex flex-col-reverse"
-      focusDepth={0.5}
-      pictureSize="1280x720"
+      pictureSize="1920x1080"
     >
       <View className="flex flex-row justify-center">
         <CircleButton icon="photo-camera" onPress={() => takePicture(values)} />

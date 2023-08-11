@@ -16,7 +16,8 @@ import {
   Title,
   Button as ButtonLDN,
   TakePicture,
-} from '../../../components';
+} from '../../../components/commons';
+import { Loading } from '../../commons';
 
 let userSchema = object({
   name: string().required('El nombre es obligatorio!'),
@@ -31,6 +32,7 @@ export const ProducsForm = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const idUser = useSelector((state) => state.login.infoUser.id);
+  const loading = useSelector((state) => state.commons.loading);
   const { initialValues } = useForm();
 
   return (
@@ -127,6 +129,7 @@ export const ProducsForm = () => {
           )}
         </Formik>
       </ScrollView>
+      <Loading isVisible={loading} />
     </LinearGradient>
   );
 };

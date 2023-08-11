@@ -5,8 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useForm } from './useForm';
 import { useSubmit } from './useSubmit';
 import { Formik } from 'formik';
-export function Auth() {
-  const [loading, setLoading] = useState(false);
+export function Auth({ setLoading, loading }) {
   const { initialValues } = useForm();
 
   return (

@@ -1,37 +1,27 @@
 import { useState } from 'react';
-import { Dialog, Divider, ListItem } from 'react-native-elements';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Text, Image, View } from 'react-native';
-import { EditProducsForm } from '../../forms';
+import { useDispatch, useSelector } from 'react-redux';
+import { Text, Image, View, Pressable } from 'react-native';
+import { Dialog, Divider, ListItem } from 'react-native-elements';
+import { Loading } from '../Loading';
+import { EditProducsForm } from '../../forms/EditProducsForm';
+import { generateInfoProduc } from '../../../utils';
+import { startLoading, stopLoading, updateProduc } from '../../../redux/slices';
 
 export const ModalEditProducts = ({ produc, handle, setHandle }) => {
+  const loading = useSelector((state) => state.commons.loading);
+  const [markSold, setMarkSold] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
-  const mainInfo = [
-    { textLeft: 'Categoria :', textRigth: produc?.produc_category },
-    { textLeft: 'Precio :', textRigth: `$ ${produc?.produc_price}` },
-    {
-      textLeft: produc?.produc_category === 'sneakers' ? 'Numero :' : 'Talle :',
-      textRigth: produc?.produc_size,
-    },
-  ];
-
-  const moreInfo = [
-    { textLeft: 'Edad :', textRigth: produc?.produc_age },
-    { textLeft: 'Color :', textRigth: produc?.produc_color },
-    { textLeft: 'Descuento :', textRigth: produc?.produc_discount },
-    { textLeft: 'Genero :', textRigth: produc?.produc_gender },
-    {
-      textLeft: 'Estado :',
-      textRigth: produc?.produc_state ? 'Disponible' : 'Vendido',
-    },
-    { textLeft: 'Unidades :', textRigth: produc?.produc_stock },
-    {
-      textLeft: 'Estilo :',
-      textRigth: produc?.produc_style,
-    },
-    { textLeft: 'Marca :', textRigth: produc?.product_brand },
-  ];
+  const dispatch = useDispatch();
+  const { mainInfo, moreInfo } = generateInfoProduc(produc);
+  const handleMarckSold = async (produc) => {
+    dispatch(startLoading());
+    await dispatch(updateProduc({ id: produc.id, produc_state: false }));
+    dispatch(stopLoading());
+    setMarkSold(false);
+    setHandle(false);
+  };
 
   return (
     <Dialog isVisible={handle} onBackdropPress={() => setHandle(false)}>
@@ -81,7 +71,7 @@ export const ModalEditProducts = ({ produc, handle, setHandle }) => {
               setExpanded(!expanded);
             }}
           >
-            <ListItem onPress={() => console.log('fff')} bottomDivider>
+            <ListItem bottomDivider>
               <ListItem.Content>
                 {moreInfo.map((item, i) => {
                   return (
@@ -97,6 +87,37 @@ export const ModalEditProducts = ({ produc, handle, setHandle }) => {
           </ListItem.Accordion>
         </>
       )}
+      {produc?.produc_state && (
+        <Pressable
+          className="flex flex-row justify-evenly bg-green-500 rounded-xl py-1 active:bg-green-300"
+          onPress={() => setMarkSold(true)}
+        >
+          <Text className="font-bold">Marcar como vendido</Text>
+          <MaterialIcons name="add-business" size={24} color="black" />
+        </Pressable>
+      )}
+      <Dialog isVisible={markSold} onBackdropPress={() => setMarkSold(false)}>
+        <Dialog.Title title="Marcar como vendido :" />
+        <Text>{`Nombre : ${produc?.produc_name}`}</Text>
+        <Text>{`Precio : $${produc?.produc_price}`}</Text>
+        <View className="flex flex-row justify-evenly mt-3">
+          <Pressable
+            className="flex flex-row justify-evenly bg-green-500 rounded-xl p-1 active:bg-green-300"
+            onPress={() => handleMarckSold(produc)}
+          >
+            <Text className="font-bold pr-1">Confirmar</Text>
+            <MaterialIcons name="add-business" size={24} color="black" />
+          </Pressable>
+          <Pressable
+            className="flex flex-row justify-evenly bg-red-500 rounded-xl p-1 active:bg-red-300"
+            onPress={() => setMarkSold(false)}
+          >
+            <Text className="font-bold">Cancelar</Text>
+            <MaterialIcons name="close" size={24} color="black" />
+          </Pressable>
+        </View>
+      </Dialog>
+      <Loading isVisible={loading} />
     </Dialog>
   );
 };
