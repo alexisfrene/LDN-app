@@ -12,3 +12,4 @@ export { ModalCategory } from './ModalCategory';
 export { SelectedCategory } from './SelectedCategory';
 export { ModalSuccefull } from './ModalSuccefull';
 export { Loading } from './Loading';
+export { CircleButton } from './CircleButton';

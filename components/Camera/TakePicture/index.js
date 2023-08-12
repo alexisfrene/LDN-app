@@ -2,7 +2,7 @@ import { Camera } from 'expo-camera';
 import { Text, View } from 'react-native';
 import { useEffect, useRef, useState } from 'react';
 import * as MediaLibrary from 'expo-media-library';
-import { CircleButton } from '../../CircleButton';
+import { CircleButton } from '../../common/CircleButton';
 import { useDispatch } from 'react-redux';
 import { startLoading, stopLoading } from '../../../redux/slices';
 

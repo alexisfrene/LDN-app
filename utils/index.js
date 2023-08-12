@@ -45,3 +45,36 @@ export const generateInfoProduc = (produc) => {
   ];
   return { mainInfo, moreInfo };
 };
+
+export const generateProductsValues = (produc) => {
+  return [
+    { name: 'Nombre :', value: produc?.produc_name, key: 'produc_name' },
+    { name: 'Edad :', value: produc?.produc_age, key: 'produc_age' },
+    { name: 'Marca :', value: produc?.produc_brand, key: 'produc_brand' },
+    {
+      name: 'Categoria :',
+      value: produc?.produc_category,
+      key: 'produc_category',
+    },
+    { name: 'Color :', value: produc?.produc_color, key: 'produc_color' },
+    {
+      name: 'Descripcion :',
+      value: produc?.produc_description,
+      key: 'produc_description',
+    },
+    {
+      name: 'Descuento :',
+      value: produc?.produc_discount,
+      key: 'produc_discount',
+    },
+    { name: 'Genero :', value: produc?.produc_gender, key: 'produc_gender' },
+    { name: 'Precio : :', value: produc?.produc_price, key: 'produc_price' },
+    {
+      name: produc?.produc_category === 'sneakers' ? 'Numero :' : 'Talle :',
+      value: produc?.produc_size,
+      key: 'produc_size',
+    },
+    { name: 'Stock :', value: produc?.produc_stock, key: 'produc_stock' },
+    { name: 'Estilo :', value: produc?.produc_style, key: 'produc_style' },
+  ];
+};

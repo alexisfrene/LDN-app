@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { updateProduc } from '../../../redux/slices';
+import { updateProduc } from '../../../../redux/slices';
 
 export function useSubmit(producId, setSuccefull, setDisable) {
   const dispatch = useDispatch();
@@ -9,6 +9,7 @@ export function useSubmit(producId, setSuccefull, setDisable) {
       const status = await axiosPromise(spec, dispatch, producId);
       if (status.payload === 204) {
         setSuccefull(true);
+        resetForm();
       } else {
         console.log('ERROR SUMBIT', status);
       }

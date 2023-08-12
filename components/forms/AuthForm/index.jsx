@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import { Alert, View } from 'react-native';
+import { Formik } from 'formik';
+import { View } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useForm } from './useForm';
 import { useSubmit } from './useSubmit';
-import { Formik } from 'formik';
-export function Auth({ setLoading, loading }) {
+
+export const AuthForm = ({ setLoading, loading }) => {
   const { initialValues } = useForm();
 
   return (
     <Formik initialValues={initialValues} onSubmit={useSubmit(setLoading)}>
-      {({ handleChange, handleBlur, handleSubmit, values }) => (
+      {({ handleChange, handleSubmit, values }) => (
         <LinearGradient colors={['#fdfac7', '#fc930a']} className="flex-1">
           <View className="h-screen flex justify-center px-1">
             <View className="bg-amber-100 rounded-2xl p-1 text-slate-950 pb-0">
@@ -55,4 +55,4 @@ export function Auth({ setLoading, loading }) {
       )}
     </Formik>
   );
-}
+};

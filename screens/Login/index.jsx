@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Auth } from '../../components/Auth';
 import { useSelector } from 'react-redux';
+import { AuthForm } from '../../components/forms';
 
 export const LoginScreen = ({ navigation }) => {
   const login = useSelector((state) => state.login);
@@ -12,5 +12,5 @@ export const LoginScreen = ({ navigation }) => {
     }
   }, [loading]);
 
-  return <Auth setLoading={setLoading} loading={loading} />;
+  return <AuthForm setLoading={setLoading} loading={loading} />;
 };

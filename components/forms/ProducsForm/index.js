@@ -16,8 +16,8 @@ import {
   Title,
   Button as ButtonLDN,
   TakePicture,
-} from '../../../components/commons';
-import { Loading } from '../../commons';
+  Loading,
+} from '../../common';
 
 let userSchema = object({
   name: string().required('El nombre es obligatorio!'),

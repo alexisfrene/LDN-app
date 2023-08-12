@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { Alert } from 'react-native';
-import { setLogin, setLogIn } from '../../redux/slices';
+import { setLogin, setLogIn } from '../../../redux/slices';
 
 export function useSubmit(setLoading) {
   const dispatch = useDispatch();

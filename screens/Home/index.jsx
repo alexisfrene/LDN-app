@@ -1,5 +1,5 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { Button, Title } from '../../components/commons';
+import { Button, Title } from '../../components';
 
 export const HomeScreen = ({ navigation }) => {
   return (

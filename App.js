@@ -10,7 +10,7 @@ import {
   HomeScreen,
   NewProducsScreen,
   ListOfProductsScreen,
-} from './views';
+} from './screens';
 
 const Stack = createNativeStackNavigator();
 
