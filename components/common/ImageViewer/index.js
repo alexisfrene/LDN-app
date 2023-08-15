@@ -7,7 +7,7 @@ export function ImageViewer({ selectedImage }) {
     <Image
       source={imageSource}
       alt="ldn-image"
-      className="h-80 w-full overflow-hidden"
+      className="h-80 w-full overflow-hidden rounded-xl"
       resizeMode="cover"
     />
   );

@@ -48,7 +48,7 @@ export const TakePicture = ({
       type={type}
       flashMode={flash}
       ref={cameraRef}
-      className="h-[80vh] flex flex-col-reverse"
+      className="h-[100vh] flex flex-col-reverse"
       pictureSize="1920x1080"
     >
       <View className="flex flex-row justify-center">
