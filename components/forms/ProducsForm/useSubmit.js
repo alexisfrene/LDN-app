@@ -6,15 +6,16 @@ import {
   stopLoading,
 } from '../../../redux/slices';
 
-export function useSubmit(id, setSuccefull, setDisable, setImage) {
+export function useSubmit(id, setSuccefull, setDisable, setImage, image) {
   const dispatch = useDispatch();
   return async (spec, { resetForm }) => {
     try {
       setDisable(true);
       dispatch(startLoading());
-      const status = await axiosPromise({ ...spec, id }, dispatch);
+      const status = await axiosPromise({ ...spec, id, uri: image }, dispatch);
       if (status.payload === 201) {
         setSuccefull(true);
+        setImage(null);
         resetForm();
       } else {
         console.log('ERROR SUMBIT', status);
@@ -22,7 +23,6 @@ export function useSubmit(id, setSuccefull, setDisable, setImage) {
     } catch (error) {
       console.log('FORM NEW PRODUC', error);
     } finally {
-      setImage(null);
       setDisable(false);
       dispatch(stopLoading());
     }
@@ -30,11 +30,14 @@ export function useSubmit(id, setSuccefull, setDisable, setImage) {
 }
 
 async function axiosPromise(spec, dispatch) {
+  const { uri, ...newData } = spec;
   const {
     payload: { image_url },
-  } = await dispatch(setImageProduc(spec));
+  } = await dispatch(
+    setImageProduc({ image_url: uri, category: spec?.category }),
+  );
   const apiSpec = transformSpec({
-    ...spec,
+    ...newData,
     image_url,
   });
   const data = await dispatch(setNewProduc(apiSpec));

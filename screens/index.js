@@ -6,6 +6,7 @@ import { LoginScreen } from './Login';
 import { ButtonTab } from './ButtonTab';
 import { NewProducsScreen } from './NewProducs';
 import { ListOfProductsScreen } from './ListOfProducts';
+import { TakePicture } from '../components';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -31,6 +32,7 @@ export const Screens = () => {
       >
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Inicio" component={TabScreens} />
+        <Stack.Screen name="Camara" component={TakePicture} />
       </Stack.Navigator>
     </NavigationContainer>
   );
