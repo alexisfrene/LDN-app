@@ -2,7 +2,7 @@ import { View, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 const icons = [
   <MaterialIcons name="home" size={36} color="black" />,
-  <MaterialIcons name="create" size={36} color="black" />,
+  <MaterialIcons name="add" size={36} color="black" />,
   <MaterialIcons name="view-list" size={36} color="black" />,
 ];
 export const ButtonTab = ({ state, descriptors, navigation }) => {

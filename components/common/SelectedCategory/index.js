@@ -2,6 +2,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { View, Image } from 'react-native';
 import { CardCategory } from '../Card';
+import { useEffect } from 'react';
 
 const pantalones = require('../../../assets/pantalones.png');
 const collar = require('../../../assets/collar.png');

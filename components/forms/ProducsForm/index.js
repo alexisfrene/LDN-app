@@ -15,9 +15,8 @@ import {
   ModalSuccefull,
   Title,
   Button as ButtonLDN,
-  TakePicture,
   Loading,
-} from '../../../components';
+} from '../../common';
 
 let userSchema = object({
   name: string().required('El nombre es obligatorio!'),
