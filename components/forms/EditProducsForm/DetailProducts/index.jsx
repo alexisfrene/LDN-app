@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { Image, Text, View, Pressable } from 'react-native';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';
+import { Image, Text, View, Pressable } from 'react-native';
 import { Dialog, Divider, ListItem } from 'react-native-elements';
 import { generateInfoProduc } from '../../../../utils';
 import { MarkSoldModa } from '../MarkSoldModal';
-import { useDispatch } from 'react-redux';
 import {
   startLoading,
   stopLoading,
@@ -28,6 +28,7 @@ export const DetailProducts = ({
     setMarkSold(false);
     setOpenDetail(false);
   };
+
   return (
     <Dialog isVisible={openDetail} onBackdropPress={() => setOpenDetail(false)}>
       <View className="flex flex-row justify-between">

@@ -2,6 +2,7 @@ import React from 'react';
 import { Dialog } from 'react-native-elements';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Text, View, Pressable } from 'react-native';
+
 export const MarkSoldModa = ({
   markSold,
   setMarkSold,

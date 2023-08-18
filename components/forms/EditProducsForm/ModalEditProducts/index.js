@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { Formik } from 'formik';
 import { Dialog } from 'react-native-elements';
 import { Text, View, Pressable, TextInput } from 'react-native';
-import { Button, ModalCategory, ModalSuccefull } from '../../../common';
-import { generateProductsValues } from '../../../../utils';
-import { useSubmit } from './useSubmit';
 import { useForm } from './useForm';
+import { useSubmit } from './useSubmit';
+import { generateProductsValues } from '../../../../utils';
+import { Button, ModalCategory, ModalSuccefull } from '../../../common';
 
 export const ModalEditProducts = ({
   produc,

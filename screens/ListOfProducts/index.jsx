@@ -3,7 +3,6 @@ import { View, ScrollView, Pressable } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Overlay } from 'react-native-elements';
 import {
   downloadImage,
   filterCategoryProducts,
@@ -56,8 +55,8 @@ export const ListOfProductsScreen = () => {
             <>
               <Title text="Lista de productos" />
               <View className="flex flex-row flex-wrap mb-10 justify-evenly h-screen">
-                {producs.length &&
-                  producs.map((product, i) => {
+                {producs?.length &&
+                  producs?.map((product, i) => {
                     return (
                       <ImageMineature
                         title={product.produc_name}
@@ -80,14 +79,16 @@ export const ListOfProductsScreen = () => {
         </LinearGradient>
         <Loading isVisible={loading} />
       </ScrollView>
-      {producs.length && (
-        <Pressable
-          onPress={() => setProducs(false)}
-          className="absolute bottom-1 rounded-full bg-amber-300 p-4 m-3 active:bg-amber-200"
-        >
-          <MaterialIcons name="keyboard-return" size={30} color="black" />
-        </Pressable>
-      )}
+      <View>
+        {producs?.length > 0 && (
+          <Pressable
+            onPress={() => setProducs(null)}
+            className="absolute bottom-1 rounded-full bg-amber-300 p-4 m-3 active:bg-amber-200"
+          >
+            <MaterialIcons name="keyboard-return" size={30} color="black" />
+          </Pressable>
+        )}
+      </View>
     </>
   );
 };
