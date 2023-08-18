@@ -5,6 +5,7 @@ const initialState = {
   isLogged: false,
   photoUri: false,
   cameraOpen: false,
+  dollar: { compra: 'N/A', venta: 'N/A' },
 };
 
 export const commonsSlice = createSlice({
@@ -26,10 +27,19 @@ export const commonsSlice = createSlice({
       state.photoUri = uri;
       state.cameraOpen = false;
     },
+    setDollarToDay: (state, action) => {
+      const { compra, venta } = action.payload;
+      state.dollar = { compra, venta };
+    },
   },
 });
 
-export const { startLoading, stopLoading, setIsLogged, setPhotoUri } =
-  commonsSlice.actions;
+export const {
+  startLoading,
+  stopLoading,
+  setIsLogged,
+  setPhotoUri,
+  setDollarToDay,
+} = commonsSlice.actions;
 
 export default commonsSlice.reducer;

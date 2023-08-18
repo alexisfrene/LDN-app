@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useRef, useState } from 'react';
 import { View, ScrollView, Pressable } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -15,10 +15,12 @@ import {
   SelectedCategory,
   Title,
   EditProducsForm,
+  ModalSuccefull,
 } from '../../components';
 
 export const ListOfProductsScreen = () => {
   const [selectedProduc, setSelectedProduc] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
   const [openDetail, setOpenDetail] = useState(false);
   const [producs, setProducs] = useState(false);
   const dispatch = useDispatch();
@@ -38,18 +40,29 @@ export const ListOfProductsScreen = () => {
       }),
     );
     dispatch(stopLoading());
-    setSelectedProduc(producsWithUrls);
-    setProducs(producsWithUrls);
+
+    if (producsWithUrls.length > 0) {
+      setSelectedProduc(producsWithUrls);
+      setProducs(producsWithUrls);
+      scrollToTop();
+    } else {
+      return setModalOpen(true);
+    }
   };
   const openDetailModal = (id) => {
     const select = producs.find((produc) => produc.id === id);
     setSelectedProduc({ ...select });
     setOpenDetail(true);
   };
+  const scrollViewRef = useRef(null);
+
+  const scrollToTop = () => {
+    scrollViewRef.current.scrollTo({ x: 0, y: 0, animated: true });
+  };
 
   return (
     <>
-      <ScrollView>
+      <ScrollView ref={scrollViewRef}>
         <LinearGradient colors={['#fdfac7', '#fc930a']} className="flex-1 px-1">
           {producs?.length && producs[0]?.publicUrl ? (
             <>
@@ -61,6 +74,8 @@ export const ListOfProductsScreen = () => {
                       <ImageMineature
                         title={product.produc_name}
                         imageURL={product.publicUrl}
+                        price={product.produc_price}
+                        size={product.produc_size}
                         onPress={() => openDetailModal(product.id)}
                         key={i}
                       />
@@ -89,6 +104,15 @@ export const ListOfProductsScreen = () => {
           </Pressable>
         )}
       </View>
+      <ModalSuccefull
+        title="No hay productos que mostrar!"
+        isVisible={modalOpen}
+        setSuccefull={setModalOpen}
+      >
+        <View className="flex flex-row justify-center">
+          <MaterialIcons name="warning" size={70} color="black" />
+        </View>
+      </ModalSuccefull>
     </>
   );
 };

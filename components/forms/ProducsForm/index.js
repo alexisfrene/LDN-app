@@ -32,7 +32,8 @@ export const ProducsForm = ({ navigation }) => {
   const idUser = useSelector((state) => state.login.infoUser.id);
   const loading = useSelector((state) => state.commons.loading);
   const photoUri = useSelector((state) => state.commons.photoUri);
-  const { initialValues } = useForm();
+  const dollar = useSelector((state) => state.commons.dollar);
+  const { initialValues } = useForm(dollar);
   useEffect(() => {
     setImage(photoUri);
   }, [photoUri]);
@@ -59,6 +60,7 @@ export const ProducsForm = ({ navigation }) => {
             setDisable,
             setImage,
             image,
+            dollar,
           )}
           validationSchema={userSchema}
         >

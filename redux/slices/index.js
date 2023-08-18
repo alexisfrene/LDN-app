@@ -4,6 +4,7 @@ import commonsReducer, {
   setIsLogged,
   setLogIn,
   setPhotoUri,
+  setDollarToDay,
 } from './common';
 
 import loginReducer, { setLogin, autoLogin } from './login';
@@ -39,4 +40,5 @@ export {
   filterCategoryProducts,
   downloadImage,
   setPhotoUri,
+  setDollarToDay,
 };

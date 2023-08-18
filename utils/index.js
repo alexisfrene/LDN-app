@@ -78,3 +78,38 @@ export const generateProductsValues = (produc) => {
     { name: 'Estilo :', value: produc?.produc_style, key: 'produc_style' },
   ];
 };
+
+const daysOfWeek = [
+  'Domingo',
+  'Lunes',
+  'Martes',
+  'Miércoles',
+  'Jueves',
+  'Viernes',
+  'Sábado',
+];
+const months = [
+  'Enero',
+  'Febrero',
+  'Marzo',
+  'Abril',
+  'Mayo',
+  'Junio',
+  'Julio',
+  'Agosto',
+  'Septiembre',
+  'Octubre',
+  'Noviembre',
+  'Diciembre',
+];
+
+const currentDate = new Date();
+
+const dayOfWeek = daysOfWeek[currentDate.getDay()];
+const dayOfMonth = currentDate.getDate();
+const month = months[currentDate.getMonth()];
+const year = currentDate.getFullYear();
+
+export const getDataFormatDMA = () => {
+  return { dayOfWeek, dayOfMonth, month, year };
+};
