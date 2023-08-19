@@ -1,248 +1,130 @@
-import React, { useState, useRef, useEffect } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  Button,
-  TouchableOpacity,
-  Modal,
-  Pressable,
-  Image,
-} from 'react-native';
 import { Formik } from 'formik';
-import { CheckBox } from '@rneui/themed';
-import { Camera, CameraType } from 'expo-camera';
-import * as MediaLibrary from 'expo-media-library';
+import { useState, useEffect } from 'react';
+import { object, string } from 'yup';
+import { useSelector } from 'react-redux';
+import { LinearGradient } from 'expo-linear-gradient';
+import { View, Pressable, ScrollView, Text } from 'react-native';
 import { useForm } from './useForm';
-import { producsCategory } from '../../../mocks';
-import { pickImage } from '../../../lib/imagePicker';
-import { ImageViewer } from '../../commons';
 import { useSubmit } from './useSubmit';
-const imageDafult = require('../../../assets/not_image.png');
-export const ProducsForm = ({ setOpenFormProducs }) => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [openCamera, setOpenCamera] = useState(false);
-  const [checkedItems, setCheckedItems] = useState('');
+import { GenerateInputs } from './GenerateInputs';
+import { pickImage } from '../../../lib/imagePicker';
+import { inputProducs } from '../../../mocks';
+import {
+  ImageViewer,
+  ModalCategory,
+  ModalSuccefull,
+  Title,
+  Button as ButtonLDN,
+  Loading,
+} from '../../common';
 
-  const { initialValues } = useForm();
-  const handlerCheckbox = (e, values) => {
-    setCheckedItems(e);
-    values.category = e;
-  };
+let userSchema = object({
+  name: string().required('El nombre es obligatorio!'),
+});
+
+export const ProducsForm = ({ navigation }) => {
   const [image, setImage] = useState();
-  const [type, setType] = useState(Camera.Constants.Type.back);
-  const [hasCameraPermission, setHasCameraPermission] = useState(null);
-  const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
-  const cameraRef = useRef(null);
+  const [disable, setDisable] = useState(false);
+  const [succefull, setSuccefull] = useState(false);
+  const [modalCamera, setModalCamera] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
+  const idUser = useSelector((state) => state.login.infoUser.id);
+  const loading = useSelector((state) => state.commons.loading);
+  const photoUri = useSelector((state) => state.commons.photoUri);
+  const dollar = useSelector((state) => state.commons.dollar);
+  const { initialValues } = useForm(dollar);
   useEffect(() => {
-    (async () => {
-      MediaLibrary.requestPermissionsAsync();
-      const cameraStatus = await Camera.requestCameraPermissionsAsync();
-      setHasCameraPermission(cameraStatus.status === 'granted');
-    })();
-  }, []);
-
-  const takePicture = async (values) => {
-    if (cameraRef) {
-      try {
-        const data = await cameraRef.current.takePictureAsync();
-        console.log(data);
-        setImage(data.uri);
-        values.image_url = data.uri;
-      } catch (error) {
-        console.log('ERROR CAMERA', error);
-      }
-    }
-  };
-
-  if (hasCameraPermission === false) {
-    return <Text>No access to camera</Text>;
-  }
+    setImage(photoUri);
+  }, [photoUri]);
 
   return (
-    <View>
-      {
-        <>
-          <Text>Agregar nuevo producto</Text>
-          <View className="bg-amber-200 h-80">
-            <ImageViewer
-              placeholderImageSource={imageDafult}
-              selectedImage={image}
-            />
-          </View>
-          <Formik
-            initialValues={initialValues}
-            onSubmit={(values) => useSubmit(values)}
-          >
-            {({ handleChange, handleBlur, handleSubmit, values }) => (
-              <View className="bg-blue-100 h-full">
-                {openCamera ? (
-                  <View>
-                    <Camera
-                      type={type}
-                      flashMode={flash}
-                      ref={cameraRef}
-                      className="h-screen"
-                    >
-                      <View>
-                        <Button
-                          title="Sacar foto"
-                          onPress={() => takePicture(values)}
-                        />
-                        <Button
-                          onPress={() => setOpenCamera(false)}
-                          title="Cerrar Camera"
-                        />
-                      </View>
-                    </Camera>
-                  </View>
-                ) : (
-                  <>
-                    <TextInput
-                      onChangeText={handleChange('name')}
-                      onBlur={handleBlur('name')}
-                      value={values.name}
-                      className="bg-slate-200 my-1"
-                      placeholder="Nombre del producto.."
-                    />
-                    <TextInput
-                      onChangeText={handleChange('description')}
-                      onBlur={handleBlur('description')}
-                      value={values.description}
-                      className="bg-slate-200 my-1"
-                      placeholder="Descripcion..."
-                    />
-                    <TextInput
-                      onChangeText={handleChange('price')}
-                      onBlur={handleBlur('price')}
-                      value={values.price}
-                      className="bg-slate-200 my-1"
-                      placeholder="Precio..."
-                      keyboardType="numeric"
-                    />
-                    <TextInput
-                      onChangeText={handleChange('color')}
-                      onBlur={handleBlur('color')}
-                      value={values.color}
-                      className="bg-slate-200 my-1"
-                      placeholder="Color.."
-                    />
+    <LinearGradient
+      colors={['#fdfac7', '#fc930a']}
+      className="flex-1 px-2 justify-evenly"
+    >
+      <Title text="Agregar nuevo producto" />
+      <ScrollView>
+        <Pressable
+          onPress={() => {
+            setModalCamera(!modalCamera);
+          }}
+        >
+          <ImageViewer selectedImage={image} />
+        </Pressable>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={useSubmit(
+            idUser,
+            setSuccefull,
+            setDisable,
+            setImage,
+            image,
+            dollar,
+          )}
+          validationSchema={userSchema}
+        >
+          {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
+            <View>
+              {inputProducs.map((input, index) => (
+                <GenerateInputs
+                  key={index}
+                  title={input.title}
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
+                  values={values}
+                  name={input.name}
+                  placeholder={input.placeholder}
+                  type={input?.type || 'default'}
+                />
+              ))}
+              <ButtonLDN
+                onPress={() => setModalVisible(true)}
+                text="Seleccione una categoria"
+              />
+              <ModalSuccefull
+                isVisible={succefull}
+                setSuccefull={setSuccefull}
+                title="Producdo creado exitosamente"
+                menssage="Su producto a sido creado , puedes seguir creando mas"
+              />
+              {errors.name ? (
+                <Text className="text-center bg-white text-red-700 font-extrabold rounded-xl mb-1">
+                  {errors.name}
+                </Text>
+              ) : null}
+              <ButtonLDN
+                onPress={handleSubmit}
+                text="Crear producto"
+                disable={disable || !!errors.name}
+              />
 
-                    <TouchableOpacity
-                      className="bg-blue-600 py-2 rounded-sm active:bg-blue-400"
-                      onPress={() => setModalVisible(true)}
-                    >
-                      <Text className="text-center text-base font-semibold">
-                        Seleccione una categoria
-                      </Text>
-                    </TouchableOpacity>
-
-                    <Pressable
-                      onPress={() => pickImage(setImage, values)}
-                      className="bg-blue-600 py-2 rounded-sm active:bg-blue-400 mt-3"
-                    >
-                      <Text className="text-center text-base font-semibold">
-                        Seleccione una imagen
-                      </Text>
-                    </Pressable>
-                    <Pressable
-                      onPress={() => setOpenCamera(true)}
-                      className="bg-blue-600 py-2 rounded-sm active:bg-blue-400 my-3"
-                    >
-                      <Text className="text-center text-base font-semibold">
-                        Saca una foto
-                      </Text>
-                    </Pressable>
-
-                    <Modal
-                      animationType="slide"
-                      transparent={true}
-                      visible={modalVisible}
-                      onRequestClose={() => {
-                        Alert.alert('Modal has been closed.');
-                        setModalVisible(!modalVisible);
-                      }}
-                    >
-                      <View className="flex bg-white justify-center mt-28  mx-1 px-1">
-                        <View>
-                          <Text>Seleccione una categoria</Text>
-                          <View className="py-2">
-                            {producsCategory.map((category, i) => {
-                              return (
-                                <CheckBox
-                                  key={i}
-                                  title={category.title}
-                                  onPress={() =>
-                                    handlerCheckbox(category.type, values)
-                                  }
-                                  value={category.type}
-                                  checked={checkedItems === category.type}
-                                />
-                              );
-                            })}
-                          </View>
-                          <View className="flex flex-row justify-center space-x-6 h-10 pb-1">
-                            <Pressable
-                              onPress={() => setModalVisible(!modalVisible)}
-                              className="bg-blue-300 w-40"
-                            >
-                              <Text>Aceptar</Text>
-                            </Pressable>
-                            <Pressable
-                              onPress={() => setModalVisible(!modalVisible)}
-                              className="bg-blue-300 w-40"
-                            >
-                              <Text>Cancelar</Text>
-                            </Pressable>
-                          </View>
-                        </View>
-                      </View>
-                    </Modal>
-                    <Button onPress={handleSubmit} title="Crear producto" />
-                    <Button
-                      onPress={() => setOpenFormProducs(false)}
-                      title="Cancelar"
-                    />
-                  </>
-                )}
-              </View>
-            )}
-          </Formik>
-        </>
-      }
-    </View>
+              <ModalSuccefull
+                isVisible={modalCamera}
+                setSuccefull={setModalCamera}
+                title="Seleccione un accion"
+                menssage="Subir / Sacar una foto"
+              >
+                <ButtonLDN
+                  onPress={() => pickImage(setImage, values, setModalCamera)}
+                  text="Seleccionar una imagen"
+                />
+                <ButtonLDN
+                  onPress={() => navigation.navigate('Camara')}
+                  text="Sacar una foto"
+                />
+              </ModalSuccefull>
+              <ModalCategory
+                modalVisible={modalVisible}
+                setModalVisible={setModalVisible}
+                values={values}
+                searchValue="category"
+              />
+            </View>
+          )}
+        </Formik>
+      </ScrollView>
+      <Loading isVisible={loading} />
+    </LinearGradient>
   );
 };
-
-// const AddProducsForm = ({ DDD }) => {
-//   const [producsName, setProducsName] = useState('');
-//   const [imageSupa, setImageSupa] = useState('');
-
-//   return (
-//     <View>
-//       <Text>Agrega un producto nuevo</Text>
-//       {/* <TextInput value={producsName} onChangeText={setProducsName} />
-//       <TouchableOpacity
-//         onPress={pickImage}
-//         style={{
-//           width: 320,
-//           height: 440,
-//           borderRadius: 18,
-//         }}
-//       >
-//         <ImageViewer
-//           placeholderImageSource={imageDafult}
-//           selectedImage={imageSupa}
-//         />
-//       </TouchableOpacity>
-//       <Button
-//         title="Publicar"
-//         onPress={() => {
-//           DDD(producsName, imageSupa);
-//           setProducsName("");
-//         }}
-//       /> */}
-//     </View>
-//   );
-// };

@@ -1,49 +1,63 @@
-import { supabase } from '../../../lib/supabse';
-export async function useSubmit(values) {
-  const { name, description, price, color, category, image_url } = values;
-  try {
-    const { formData, filePath } = formatUrl(image_url, category);
-    let res;
+import { useDispatch } from 'react-redux';
+import {
+  setImageProduc,
+  setNewProduc,
+  startLoading,
+  stopLoading,
+} from '../../../redux/slices';
 
-    if (formData && filePath) {
-      res = await supabase.storage
-        .from('ldn_bucket')
-        .upload(filePath, formData);
+export function useSubmit(id, setSuccefull, setDisable, setImage, image) {
+  const dispatch = useDispatch();
+  return async (spec, { resetForm }) => {
+    try {
+      setDisable(true);
+      dispatch(startLoading());
+      const status = await axiosPromise({ ...spec, id, uri: image }, dispatch);
+      if (status.payload === 201) {
+        setSuccefull(true);
+        setImage(null);
+        resetForm();
+      } else {
+        console.log('ERROR SUMBIT', status);
+      }
+    } catch (error) {
+      console.log('FORM NEW PRODUC', error);
+    } finally {
+      setDisable(false);
+      dispatch(stopLoading());
     }
-
-    await supabase.from('ldn_producs').insert({
-      name,
-      description,
-      price,
-      color,
-      category,
-      image_url: res?.data.path || '',
-    });
-  } catch (err) {
-    console.log('aca', err);
-  }
+  };
 }
 
-const formatUrl = (image_url, category) => {
-  if (!!image_url) {
-    const fileExt = image_url.split('.').pop();
-    const fileName = image_url.replace(/^.*[\\\/]/, '');
-    const filePath = `ldn-images/${category}/${Date.now()}.${fileExt}`;
-    const formData = new FormData();
-    const photo = {
-      uri: image_url,
-      name: fileName,
-      type: `image/${fileExt}`,
-    };
-    formData.append('file', photo);
+async function axiosPromise(spec, dispatch) {
+  const { uri, ...newData } = spec;
+  const {
+    payload: { image_url },
+  } = await dispatch(
+    setImageProduc({ image_url: uri, category: spec?.category }),
+  );
+  const apiSpec = transformSpec({
+    ...newData,
+    image_url,
+  });
+  const data = await dispatch(setNewProduc(apiSpec));
+  return data;
+}
 
-    return { formData, filePath };
-  } else {
-    return { formData: undefined, filePath: undefined };
+function transformSpec(spec) {
+  spec.price = Number(spec.price.replace(/\$/g, ''));
+  const apiSpec = {
+    user: spec.id,
+    produc_name: spec.name,
+  };
+
+  for (let key in spec) {
+    if (!!spec[key]) {
+      if (key !== 'id') {
+        apiSpec['produc_' + key] = spec[key];
+      }
+    }
   }
-};
-//     const res = await supabase.storage
-//       .from("ldn_bucket")
-//       .upload(filePath, formData);
-//     console.log("RES SUPABASE", res);
-//   }
+
+  return apiSpec;
+}
