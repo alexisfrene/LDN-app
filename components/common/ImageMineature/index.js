@@ -5,7 +5,7 @@ export const ImageMineature = ({ title, imageURL, onPress, price, size }) => {
     <Pressable onPress={onPress}>
       <View className="my-1 border-2 border-amber-700">
         <Text
-          className="w-28 bg-amber-400 p-1"
+          className="w-28 bg-amber-400 p-1 font-bold"
           numberOfLines={1}
           ellipsizeMode="tail"
         >
