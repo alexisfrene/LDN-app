@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
 
-export function useForm() {
-  const [initialValues, setInitialValues] = useState(() => getInitialValues());
+export function useForm(dollar) {
+  const [initialValues, setInitialValues] = useState(() =>
+    getInitialValues(dollar),
+  );
 
   useEffect(() => {
-    setInitialValues(getInitialValues());
+    setInitialValues(getInitialValues(dollar));
   }, []);
 
   const validate = useCallback((values) => {
@@ -23,7 +25,8 @@ export function useForm() {
   return { initialValues, validate };
 }
 
-function getInitialValues() {
+function getInitialValues(dollar) {
+  const dollarValue = parseFloat(dollar.venta.replace(',', '.'));
   const initialValues = {
     gender: '',
     age: '',
@@ -36,6 +39,7 @@ function getInitialValues() {
     color: null,
     category: 'other',
     image_url: null,
+    dollar_today: dollarValue,
   };
 
   return initialValues;

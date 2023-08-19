@@ -3,7 +3,9 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   loading: false,
   isLogged: false,
-  isLoggedIn: false,
+  photoUri: false,
+  cameraOpen: false,
+  dollar: { compra: 'N/A', venta: 'N/A' },
 };
 
 export const commonsSlice = createSlice({
@@ -20,13 +22,24 @@ export const commonsSlice = createSlice({
       const { isLogged } = action.payload;
       state.isLogged = isLogged;
     },
-    setLogIn: (state) => {
-      state.isLoggedIn = true;
+    setPhotoUri: (state, action) => {
+      const { uri } = action.payload;
+      state.photoUri = uri;
+      state.cameraOpen = false;
+    },
+    setDollarToDay: (state, action) => {
+      const { compra, venta } = action.payload;
+      state.dollar = { compra, venta };
     },
   },
 });
 
-export const { startLoading, stopLoading, setIsLogged, setLogIn } =
-  commonsSlice.actions;
+export const {
+  startLoading,
+  stopLoading,
+  setIsLogged,
+  setPhotoUri,
+  setDollarToDay,
+} = commonsSlice.actions;
 
 export default commonsSlice.reducer;

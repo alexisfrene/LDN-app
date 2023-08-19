@@ -1,4 +1,5 @@
 export { signInWithEmail } from './auth';
+export { getDollar } from './dollar';
 export {
   uploadImageProduc,
   uploadProduc,

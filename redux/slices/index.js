@@ -3,6 +3,8 @@ import commonsReducer, {
   stopLoading,
   setIsLogged,
   setLogIn,
+  setPhotoUri,
+  setDollarToDay,
 } from './common';
 
 import loginReducer, { setLogin, autoLogin } from './login';
@@ -37,4 +39,6 @@ export {
   updateProduc,
   filterCategoryProducts,
   downloadImage,
+  setPhotoUri,
+  setDollarToDay,
 };
