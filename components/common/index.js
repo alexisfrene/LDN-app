@@ -13,3 +13,5 @@ export { SelectedCategory } from './SelectedCategory';
 export { ModalSuccefull } from './ModalSuccefull';
 export { Loading } from './Loading';
 export { CircleButton } from './CircleButton';
+export { ModalSize } from './ModalSize';
+export { SelectedOption } from './SelectedOption';

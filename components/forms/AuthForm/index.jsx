@@ -2,14 +2,20 @@ import { Formik } from 'formik';
 import { View } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useForm } from './useForm';
 import { useSubmit } from './useSubmit';
+import { useState } from 'react';
 
-export const AuthForm = ({ setLoading, loading }) => {
-  const { initialValues } = useForm();
+export const AuthForm = ({ navigation }) => {
+  const [loading, setLoading] = useState(false);
 
   return (
-    <Formik initialValues={initialValues} onSubmit={useSubmit(setLoading)}>
+    <Formik
+      initialValues={{
+        email: '',
+        password: '',
+      }}
+      onSubmit={useSubmit(setLoading, navigation)}
+    >
       {({ handleChange, handleSubmit, values }) => (
         <LinearGradient colors={['#fdfac7', '#fc930a']} className="flex-1">
           <View className="h-screen flex justify-center px-1">
@@ -19,7 +25,7 @@ export const AuthForm = ({ setLoading, loading }) => {
                 label="Email"
                 leftIcon={{ type: 'font-awesome', name: 'envelope' }}
                 onChangeText={handleChange('email')}
-                value={values.email}
+                value={values?.email}
                 placeholder="email@address.com"
                 autoCapitalize={'none'}
               />
@@ -30,7 +36,7 @@ export const AuthForm = ({ setLoading, loading }) => {
                 label="Contraseña"
                 leftIcon={{ type: 'font-awesome', name: 'lock' }}
                 onChangeText={handleChange('password')}
-                value={values.password}
+                value={values?.password}
                 secureTextEntry={true}
                 autoCapitalize={'none'}
               />

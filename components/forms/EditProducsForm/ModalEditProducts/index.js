@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Formik } from 'formik';
 import { Dialog } from 'react-native-elements';
 import { Text, View, Pressable, TextInput } from 'react-native';
@@ -16,9 +16,27 @@ export const ModalEditProducts = ({
   const [disable, setDisable] = useState(false);
   const [succefull, setSuccefull] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const { initialValues } = useForm();
-  const producsValues = generateProductsValues(produc);
 
+  const producsValues = generateProductsValues(produc);
+  //console.log('INITIAL VALUES', initialValues);
+
+  const selectedCategory = (values) => {
+    values.category = produc.produc_category;
+    setModalVisible(true);
+  };
+
+  const initialValues = {
+    produc_gender: null,
+    produc_age: null,
+    produc_style: null,
+    produc_brand: null,
+    produc_size: null,
+    produc_name: null,
+    produc_description: null,
+    produc_price: null,
+    produc_color: null,
+    category: null,
+  };
   return (
     <Dialog isVisible={openEdit} onBackdropPress={() => setOpenEdit(false)}>
       <Dialog.Title title="Editando producto" />
@@ -34,15 +52,15 @@ export const ModalEditProducts = ({
                   <Text className="w-24">{name}</Text>
                   {key === 'produc_category' ? (
                     <Pressable
-                      onPress={() => setModalVisible(true)}
-                      className="bg-amber-500 active:bg-amber-400 rounded-lg p-1 my-0.5"
+                      onPress={() => selectedCategory(values)}
+                      className="bg-amber-500 active:bg-amber-400 rounded-lg p-1 my-0.5 flex-1"
                     >
-                      <Text>Seleccionar</Text>
+                      <Text className="text-center font-bold">Seleccionar</Text>
                     </Pressable>
                   ) : (
                     <TextInput
                       placeholder={value?.toString()}
-                      className="font-normal"
+                      className="flex-1 font-normal text-center bg-slate-200 rounded-lg my-0.5"
                       value={values[key]}
                       onChangeText={handleChange(key)}
                     />

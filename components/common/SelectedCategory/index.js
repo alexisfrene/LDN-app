@@ -2,7 +2,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { View, Image } from 'react-native';
 import { CardCategory } from '../Card';
-import { useEffect } from 'react';
 
 const pantalones = require('../../../assets/pantalones.png');
 const collar = require('../../../assets/collar.png');
@@ -20,6 +19,7 @@ const calcetines = require('../../../assets/calcetines.png');
 const boxers = require('../../../assets/boxers.png');
 const calzas = require('../../../assets/calzas.png');
 const jeans = require('../../../assets/jeans.png');
+const sandalias = require('../../../assets/sandalias.png');
 
 export const SelectedCategory = ({ handlePress }) => {
   return (
@@ -36,6 +36,9 @@ export const SelectedCategory = ({ handlePress }) => {
         </CardCategory>
         <CardCategory title="Borcegos" onPress={() => handlePress('boots')}>
           <Image source={botas} className="h-16 w-16 ml-1" />
+        </CardCategory>
+        <CardCategory title="Sandalias" onPress={() => handlePress('sandals')}>
+          <Image source={sandalias} className="h-16 w-16 ml-1" />
         </CardCategory>
         <CardCategory title="Remeras" onPress={() => handlePress('t-shirts')}>
           <Ionicons name="shirt" size={64} color="black" />

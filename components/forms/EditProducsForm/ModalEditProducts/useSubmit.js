@@ -29,11 +29,13 @@ async function axiosPromise(spec, dispatch, id) {
 }
 
 function transformSpec(spec) {
-  const apiSpec = { produc_category: null };
+  const apiSpec = {};
   for (let key in spec) {
     if (!!spec[key]) {
       if (key === 'category') {
-        apiSpec.produc_category = spec[key];
+        if (spec[key].length && spec[key] !== null) {
+          apiSpec.produc_category = spec[key];
+        }
       } else {
         apiSpec[key] = spec[key];
       }

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
   DollarCard,
-  SummaryCard,
+  //SummaryCard,
   SummaryProducts,
   Title,
 } from '../../components';
@@ -11,7 +11,7 @@ import { getDollar } from '../../services';
 import { setDollarToDay } from '../../redux/slices';
 import { useIsFocused } from '@react-navigation/native';
 
-export const HomeScreen = ({ navigation }) => {
+export const HomeScreen = () => {
   const [dollar, setDollar] = useState();
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
@@ -31,7 +31,7 @@ export const HomeScreen = ({ navigation }) => {
     <LinearGradient colors={['#fdfac7', '#fc930a']} className="flex-1 px-2">
       <Title text="Informacion :" />
       <DollarCard dollar={dollar} />
-      <SummaryCard />
+      {/* <SummaryCard /> */}
       <SummaryProducts />
     </LinearGradient>
   );

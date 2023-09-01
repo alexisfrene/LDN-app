@@ -1,14 +1,14 @@
 import { Formik } from 'formik';
-import { useState, useEffect } from 'react';
 import { object, string } from 'yup';
 import { useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { View, Pressable, ScrollView, Text } from 'react-native';
 import { useForm } from './useForm';
 import { useSubmit } from './useSubmit';
 import { GenerateInputs } from './GenerateInputs';
 import { pickImage } from '../../../lib/imagePicker';
-import { inputProducs } from '../../../mocks';
+import { inputProducs, selectedOption } from '../../../mocks';
 import {
   ImageViewer,
   ModalCategory,
@@ -16,6 +16,8 @@ import {
   Title,
   Button as ButtonLDN,
   Loading,
+  ModalSize,
+  SelectedOption,
 } from '../../common';
 
 let userSchema = object({
@@ -26,14 +28,17 @@ export const ProducsForm = ({ navigation }) => {
   const [image, setImage] = useState();
   const [disable, setDisable] = useState(false);
   const [succefull, setSuccefull] = useState(false);
+  const [sizeModal, setSizeModal] = useState(false);
   const [modalCamera, setModalCamera] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
-
+  const [categoryModal, setCategoryModal] = useState(false);
   const idUser = useSelector((state) => state.login.infoUser.id);
-  const loading = useSelector((state) => state.commons.loading);
-  const photoUri = useSelector((state) => state.commons.photoUri);
-  const dollar = useSelector((state) => state.commons.dollar);
+  const { loading, photoUri, dollar } = useSelector((state) => state.commons);
   const { initialValues } = useForm(dollar);
+  const resetState = () => {
+    setSuccefull(true);
+    setImage(null);
+  };
+
   useEffect(() => {
     setImage(photoUri);
   }, [photoUri]);
@@ -54,14 +59,7 @@ export const ProducsForm = ({ navigation }) => {
         </Pressable>
         <Formik
           initialValues={initialValues}
-          onSubmit={useSubmit(
-            idUser,
-            setSuccefull,
-            setDisable,
-            setImage,
-            image,
-            dollar,
-          )}
+          onSubmit={useSubmit(idUser, setDisable, resetState, image)}
           validationSchema={userSchema}
         >
           {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
@@ -78,8 +76,23 @@ export const ProducsForm = ({ navigation }) => {
                   type={input?.type || 'default'}
                 />
               ))}
+              {selectedOption.map(({ title, options, change }, index) => {
+                return (
+                  <SelectedOption
+                    title={title}
+                    options={options}
+                    values={values}
+                    change={change}
+                    key={index}
+                  />
+                );
+              })}
               <ButtonLDN
-                onPress={() => setModalVisible(true)}
+                onPress={() => setSizeModal(true)}
+                text="Seleccione el talle/numero"
+              />
+              <ButtonLDN
+                onPress={() => setCategoryModal(true)}
                 text="Seleccione una categoria"
               />
               <ModalSuccefull
@@ -115,10 +128,15 @@ export const ProducsForm = ({ navigation }) => {
                 />
               </ModalSuccefull>
               <ModalCategory
-                modalVisible={modalVisible}
-                setModalVisible={setModalVisible}
+                modalVisible={categoryModal}
+                setModalVisible={setCategoryModal}
                 values={values}
                 searchValue="category"
+              />
+              <ModalSize
+                sizeModal={sizeModal}
+                setSizeModal={setSizeModal}
+                values={values}
               />
             </View>
           )}

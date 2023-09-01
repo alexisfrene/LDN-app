@@ -1,2 +1,6 @@
-import { producsCategory, inputProducs } from './producs';
-export { producsCategory, inputProducs };
+export {
+  producsCategory,
+  inputProducs,
+  productsSize,
+  selectedOption,
+} from './producs';

@@ -82,8 +82,6 @@ export const downloadImage = createAsyncThunk(
 export const producsSlice = createSlice({
   name: 'producs',
   initialState,
-  reducers: {},
-  extraReducers: (builder) => {},
 });
 
 export default producsSlice.reducer;

@@ -1,26 +1,13 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export function useForm() {
-  const [initialValues, setInitialValues] = useState(() => getInitialValues());
+  const [initialValues, setInitialValues] = useState({});
 
   useEffect(() => {
     setInitialValues(getInitialValues());
   }, []);
 
-  const validate = useCallback((values) => {
-    const errors = {};
-    const requiredMsg = 'Campo requerido';
-    const requiredFields = ['name', 'price', 'category'];
-    requiredFields.forEach((requiredField) => {
-      if (!values[requiredField]) {
-        errors[requiredField] = requiredMsg;
-      }
-    });
-
-    return errors;
-  }, []);
-
-  return { initialValues, validate };
+  return { initialValues };
 }
 
 function getInitialValues() {

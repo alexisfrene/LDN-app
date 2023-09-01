@@ -15,6 +15,7 @@ export const producsCategory = [
   { type: 'underwear', title: 'Ropa interior' },
   { type: 'leggings', title: 'Calzas' },
   { type: 'jeans', title: 'Jeans' },
+  { type: 'sandals', title: 'Sandalias' },
   { type: 'other', title: 'Otros' },
 ];
 export const inputProducs = [
@@ -29,12 +30,8 @@ export const inputProducs = [
     title: 'Precio :',
     type: 'numeric',
   },
-  { name: 'size', placeholder: 'XL ...', title: 'Numero / Talle :' },
   { name: 'brand', placeholder: 'Nike ...', title: 'Marca :' },
   { name: 'color', placeholder: 'Amarrillo con blanco...', title: 'Color :' },
-  { name: 'style', placeholder: 'Deportivas ...', title: 'Estilo :' },
-  { name: 'age', placeholder: 'Adulto / Niño ...', title: 'Edades :' },
-  { name: 'gender', placeholder: 'Masculino/Femenino ...', title: 'Genero :' },
   {
     name: 'description',
     placeholder: 'Zapatilla modelo ancho...',
@@ -58,3 +55,25 @@ export const newProduc = {
   produc_stock: 10,
   produc_discount: 'asds',
 };
+
+export const productsSize = () => {
+  let size_number = [];
+  for (let i = 1; i <= 45; i++) {
+    size_number.push(i);
+  }
+
+  return {
+    number: size_number,
+    letter: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
+  };
+};
+
+export const selectedOption = [
+  { title: 'Genero :', options: ['Masculino', 'Femenino'], change: 'gender' },
+  { title: 'Edad :', options: ['Niño', 'Adulto'], change: 'age' },
+  {
+    title: 'Estilo :',
+    options: ['Deportivo', 'Urbano', 'Salida'],
+    change: 'style',
+  },
+];

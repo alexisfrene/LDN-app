@@ -1,19 +1,19 @@
 import { useDispatch } from 'react-redux';
-import { Alert } from 'react-native';
-import { setLogin, setLogIn } from '../../../redux/slices';
+import { setLogin } from '../../../redux/slices';
 
-export function useSubmit(setLoading) {
+export function useSubmit(setLoading, navigation) {
   const dispatch = useDispatch();
   return async (spec) => {
     try {
       setLoading(true);
-      const data = await axiosPromise(spec, dispatch);
-      if (data?.payload?.data?.role === 'authenticated') {
-        dispatch(setLogIn());
+      const res = await axiosPromise(spec, dispatch);
+      if (res?.payload?.aud === 'authenticated') {
+        navigation.navigate('Inicio');
       }
-      setLoading(false);
     } catch (error) {
-      Alert('fail', error.message);
+      console.log('Fail', error);
+    } finally {
+      setLoading(false);
     }
   };
 }
@@ -21,13 +21,14 @@ export function useSubmit(setLoading) {
 async function axiosPromise(spec, dispatch) {
   const apiSpec = transformSpec(spec);
   const data = await dispatch(setLogin(apiSpec));
+
   return data;
 }
 
 function transformSpec(spec) {
   const apiSpec = {
-    email: spec.email,
-    password: spec.password,
+    email: spec?.email,
+    password: spec?.password,
   };
   return apiSpec;
 }

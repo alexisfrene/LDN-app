@@ -1,5 +1,12 @@
 import { useRef, useState } from 'react';
-import { View, ScrollView, Pressable } from 'react-native';
+import {
+  View,
+  ScrollView,
+  Pressable,
+  ActivityIndicator,
+  Text,
+  FlatList,
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -44,7 +51,6 @@ export const ListOfProductsScreen = () => {
     if (producsWithUrls.length > 0) {
       setSelectedProduc(producsWithUrls);
       setProducs(producsWithUrls);
-      scrollToTop();
     } else {
       return setModalOpen(true);
     }
@@ -54,50 +60,50 @@ export const ListOfProductsScreen = () => {
     setSelectedProduc({ ...select });
     setOpenDetail(true);
   };
-  const scrollViewRef = useRef(null);
-
-  const scrollToTop = () => {
-    scrollViewRef.current.scrollTo({ x: 0, y: 0, animated: true });
+  const resetProducts = () => {
+    setProducs(null);
   };
 
   return (
     <>
-      <ScrollView ref={scrollViewRef}>
-        <LinearGradient colors={['#fdfac7', '#fc930a']} className="flex-1 px-1">
-          {producs?.length && producs[0]?.publicUrl ? (
-            <>
-              <Title text="Lista de productos" />
-              <View className="flex flex-row flex-wrap mb-10 justify-evenly h-screen">
-                {producs?.length &&
-                  producs?.map((product, i) => {
-                    return (
-                      <ImageMineature
-                        title={product.produc_name}
-                        imageURL={product.publicUrl}
-                        price={product.produc_price}
-                        size={product.produc_size}
-                        onPress={() => openDetailModal(product.id)}
-                        key={i}
-                      />
-                    );
-                  })}
-              </View>
-            </>
-          ) : (
-            <SelectedCategory handlePress={handlePress} />
-          )}
-          <EditProducsForm
-            produc={selectedProduc}
-            openDetail={openDetail}
-            setOpenDetail={setOpenDetail}
+      <LinearGradient colors={['#fdfac7', '#fc930a']} className="flex-1 px-1">
+        {producs?.length && producs[0]?.publicUrl ? (
+          <FlatList
+            contentContainerStyle={{
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            numColumns={3}
+            data={producs}
+            renderItem={({ item }) => {
+              return (
+                <ImageMineature
+                  title={item.produc_name}
+                  imageURL={item.publicUrl}
+                  price={item.produc_price}
+                  size={item.produc_size}
+                  onPress={() => openDetailModal(item.id)}
+                  key={item.produc_name}
+                />
+              );
+            }}
+            keyExtractor={(item) => item.id}
           />
-        </LinearGradient>
-        <Loading isVisible={loading} />
-      </ScrollView>
+        ) : (
+          <ScrollView scrollEventThrottle={400}>
+            <SelectedCategory handlePress={handlePress} />
+          </ScrollView>
+        )}
+      </LinearGradient>
+      <EditProducsForm
+        produc={selectedProduc}
+        openDetail={openDetail}
+        setOpenDetail={setOpenDetail}
+      />
       <View>
         {producs?.length > 0 && (
           <Pressable
-            onPress={() => setProducs(null)}
+            onPress={resetProducts}
             className="absolute bottom-1 rounded-full bg-amber-300 p-4 m-3 active:bg-amber-200"
           >
             <MaterialIcons name="keyboard-return" size={30} color="black" />
@@ -113,6 +119,7 @@ export const ListOfProductsScreen = () => {
           <MaterialIcons name="warning" size={70} color="black" />
         </View>
       </ModalSuccefull>
+      <Loading isVisible={loading} />
     </>
   );
 };

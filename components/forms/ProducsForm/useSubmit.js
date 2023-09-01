@@ -6,7 +6,7 @@ import {
   stopLoading,
 } from '../../../redux/slices';
 
-export function useSubmit(id, setSuccefull, setDisable, setImage, image) {
+export function useSubmit(id, setDisable, resetState, image) {
   const dispatch = useDispatch();
   return async (spec, { resetForm }) => {
     try {
@@ -14,8 +14,7 @@ export function useSubmit(id, setSuccefull, setDisable, setImage, image) {
       dispatch(startLoading());
       const status = await axiosPromise({ ...spec, id, uri: image }, dispatch);
       if (status.payload === 201) {
-        setSuccefull(true);
-        setImage(null);
+        resetState();
         resetForm();
       } else {
         console.log('ERROR SUMBIT', status);

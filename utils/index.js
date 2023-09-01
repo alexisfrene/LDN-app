@@ -68,7 +68,7 @@ export const generateProductsValues = (produc) => {
       key: 'produc_discount',
     },
     { name: 'Genero :', value: produc?.produc_gender, key: 'produc_gender' },
-    { name: 'Precio : :', value: produc?.produc_price, key: 'produc_price' },
+    { name: 'Precio :', value: produc?.produc_price, key: 'produc_price' },
     {
       name: produc?.produc_category === 'sneakers' ? 'Numero :' : 'Talle :',
       value: produc?.produc_size,

@@ -5,23 +5,16 @@ import { producsCategory } from '../../../mocks';
 import { Button } from '../Button';
 
 export const ModalCategory = ({ modalVisible, setModalVisible, values }) => {
-  const [checkedItems, setCheckedItems] = useState('other');
+  const [checkedItems, setCheckedItems] = useState(values.category || '');
   const handlerCheckbox = (e, values) => {
     setCheckedItems(e);
     values.category = e;
   };
+
   return (
-    <Modal
-      animationType="slide"
-      transparent={true}
-      visible={modalVisible}
-      onRequestClose={() => {
-        Alert.alert('Modal has been closed.');
-        setModalVisible(!modalVisible);
-      }}
-    >
+    <Modal animationType="slide" transparent={true} visible={modalVisible}>
       <ScrollView>
-        <View className="flex bg-amber-600 justify-center mt-28  mx-1 px-4 rounded-md">
+        <View className="flex bg-amber-600 justify-center mx-1 px-4 rounded-md">
           <View>
             <Text className="text-center text-lg font-semibold mt-1">
               Seleccione una categoria
