@@ -1,5 +1,6 @@
+import React from 'react';
 import { Formik } from 'formik';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useSubmit } from './useSubmit';
@@ -17,40 +18,37 @@ export const AuthForm = ({ navigation }) => {
       onSubmit={useSubmit(setLoading, navigation)}
     >
       {({ handleChange, handleSubmit, values }) => (
-        <LinearGradient colors={['#fdfac7', '#fc930a']} className="flex-1">
-          <View className="h-screen flex justify-center px-1">
-            <View className="bg-amber-100 rounded-2xl p-1 text-slate-950 pb-0">
+        <LinearGradient
+          colors={['#fdfac7', '#fc930a']}
+          style={styles.container}
+        >
+          <View style={styles.innerContainer}>
+            <View style={styles.inputContainer}>
               <Input
-                className="active:bg-amber-50"
                 label="Email"
                 leftIcon={{ type: 'font-awesome', name: 'envelope' }}
                 onChangeText={handleChange('email')}
                 value={values?.email}
                 placeholder="email@address.com"
                 autoCapitalize={'none'}
+                inputStyle={styles.input}
               />
             </View>
-            <View className="bg-amber-100 rounded-2xl p-1 my-4 pb-0 shadow">
+            <View style={styles.inputContainer}>
               <Input
-                className="active:bg-amber-50"
                 label="Contraseña"
                 leftIcon={{ type: 'font-awesome', name: 'lock' }}
                 onChangeText={handleChange('password')}
                 value={values?.password}
                 secureTextEntry={true}
                 autoCapitalize={'none'}
+                inputStyle={styles.input}
               />
             </View>
-            <View className="mb-20 mt-8 h-20 active:bg-white">
+            <View style={styles.buttonContainer}>
               <Button
-                buttonStyle={{
-                  backgroundColor: 'black',
-                  borderWidth: 2,
-                  borderColor: 'white',
-                  borderRadius: 30,
-                  height: 50,
-                }}
-                titleStyle={{ fontWeight: 'bold' }}
+                buttonStyle={styles.button}
+                titleStyle={styles.buttonText}
                 title="Iniciar sesión"
                 disabled={loading}
                 onPress={() => handleSubmit()}
@@ -62,3 +60,48 @@ export const AuthForm = ({ navigation }) => {
     </Formik>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  innerContainer: {
+    padding: 10,
+    width: '100%',
+    alignItems: 'center',
+  },
+  inputContainer: {
+    backgroundColor: '#fdfac7',
+    borderRadius: 20,
+    padding: 10,
+    marginTop: 10,
+    width: '100%',
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+  },
+  input: {
+    backgroundColor: 'transparent',
+  },
+  buttonContainer: {
+    marginTop: 20,
+    marginBottom: 20,
+    height: 50,
+    width: '100%',
+  },
+  button: {
+    backgroundColor: 'black',
+    borderWidth: 2,
+    borderColor: 'white',
+    borderRadius: 30,
+    height: 50,
+  },
+  buttonText: {
+    fontWeight: 'bold',
+  },
+});

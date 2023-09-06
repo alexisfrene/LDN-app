@@ -1,12 +1,5 @@
-import { useRef, useState } from 'react';
-import {
-  View,
-  ScrollView,
-  Pressable,
-  ActivityIndicator,
-  Text,
-  FlatList,
-} from 'react-native';
+import { useState } from 'react';
+import { View, ScrollView, Pressable, FlatList } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -20,7 +13,6 @@ import {
   Loading,
   ImageMineature,
   SelectedCategory,
-  Title,
   EditProducsForm,
   ModalSuccefull,
 } from '../../components';
