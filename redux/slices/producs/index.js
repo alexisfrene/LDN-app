@@ -16,7 +16,6 @@ export const updateProduc = createAsyncThunk(
   async (spec) => {
     try {
       const res = await updateProduct(spec);
-
       return res.status;
     } catch (error) {
       console.log('producs/updateProduc', error);

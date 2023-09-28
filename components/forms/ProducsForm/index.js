@@ -18,6 +18,7 @@ import {
   Loading,
   ModalSize,
   SelectedOption,
+  LinerGradientConteiner,
 } from '../../common';
 
 let userSchema = object({
@@ -44,10 +45,7 @@ export const ProducsForm = ({ navigation }) => {
   }, [photoUri]);
 
   return (
-    <LinearGradient
-      colors={['#fdfac7', '#fc930a']}
-      className="flex-1 px-2 justify-evenly"
-    >
+    <LinerGradientConteiner>
       <Title text="Agregar nuevo producto" />
       <ScrollView>
         <Pressable
@@ -143,6 +141,6 @@ export const ProducsForm = ({ navigation }) => {
         </Formik>
       </ScrollView>
       <Loading isVisible={loading} />
-    </LinearGradient>
+    </LinerGradientConteiner>
   );
 };

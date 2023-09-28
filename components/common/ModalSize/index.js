@@ -64,7 +64,7 @@ export const ModalSize = ({ sizeModal, setSizeModal, values }) => {
             </Pressable>
           ))}
         </View>
-        <View>
+        <View style={{ marginTop: 100 }}>
           <Button
             onPress={() => {
               values.size = sizeSelected;

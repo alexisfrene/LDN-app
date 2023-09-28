@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Formik } from 'formik';
 import { Dialog } from 'react-native-elements';
 import { Text, View, Pressable, TextInput } from 'react-native';
-import { useForm } from './useForm';
 import { useSubmit } from './useSubmit';
 import { generateProductsValues } from '../../../../utils';
 import { Button, ModalCategory, ModalSuccefull } from '../../../common';
@@ -12,19 +11,18 @@ export const ModalEditProducts = ({
   openEdit,
   setOpenEdit,
   setOpenDetail,
+  typeSearch,
+  handlePress,
 }) => {
   const [disable, setDisable] = useState(false);
   const [succefull, setSuccefull] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-
   const producsValues = generateProductsValues(produc);
-  //console.log('INITIAL VALUES', initialValues);
-
   const selectedCategory = (values) => {
     values.category = produc.produc_category;
     setModalVisible(true);
   };
-
+  //Todo : esto se podria mejorar
   const initialValues = {
     produc_gender: null,
     produc_age: null,
@@ -37,12 +35,18 @@ export const ModalEditProducts = ({
     produc_color: null,
     category: null,
   };
+  const closeAll = () => {
+    setOpenEdit(false);
+    setOpenDetail(false);
+  };
   return (
     <Dialog isVisible={openEdit} onBackdropPress={() => setOpenEdit(false)}>
       <Dialog.Title title="Editando producto" />
       <Formik
         initialValues={initialValues}
-        onSubmit={useSubmit(produc?.id, setSuccefull, setDisable)}
+        onSubmit={useSubmit(produc?.id, closeAll, setDisable, () =>
+          handlePress(typeSearch),
+        )}
       >
         {({ values, handleChange, handleSubmit }) => (
           <>
@@ -74,14 +78,7 @@ export const ModalEditProducts = ({
                 onPress={() => handleSubmit()}
                 text="Guardar"
               />
-              <Button
-                disable={disable}
-                onPress={() => {
-                  setOpenEdit(false);
-                  setOpenDetail(false);
-                }}
-                text="Cerrar"
-              />
+              <Button disable={disable} onPress={closeAll} text="Cerrar" />
             </View>
             <ModalCategory
               modalVisible={modalVisible}

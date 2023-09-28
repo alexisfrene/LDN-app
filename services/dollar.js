@@ -1,11 +1,10 @@
 export const getDollar = async () => {
   try {
-    const res = await fetch(
-      'https://www.dolarsi.com/api/api.php?type=valoresprincipales',
-    ).then((res) => res.json());
-    const dollarBlue = res?.filter((item) => item.casa.nombre === 'Dolar Blue');
+    const res = await fetch('https://dolarapi.com/v1/dolares/blue').then(
+      (res) => res.json(),
+    );
 
-    return dollarBlue[0].casa;
+    return res;
   } catch (error) {
     console.log('ERROR HOME', error);
   }

@@ -14,8 +14,8 @@ export function useSubmit(id, setDisable, resetState, image) {
       dispatch(startLoading());
       const status = await axiosPromise({ ...spec, id, uri: image }, dispatch);
       if (status.payload === 201) {
-        resetState();
-        resetForm();
+        // resetState();
+        // resetForm();
       } else {
         console.log('ERROR SUMBIT', status);
       }

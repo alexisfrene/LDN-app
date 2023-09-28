@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useIsFocused } from '@react-navigation/native';
 import { getDollar } from '../../services';
 import { setDollarToDay } from '../../redux/slices';
 import { DollarCard, SummaryProducts, Title } from '../../components';
+import { LinerGradientConteiner } from '../../components/common';
 
 export const HomeScreen = () => {
   const [dollar, setDollar] = useState();
@@ -23,10 +23,10 @@ export const HomeScreen = () => {
   }, [isFocused]);
 
   return (
-    <LinearGradient colors={['#fdfac7', '#fc930a']} className="flex-1 px-2">
+    <LinerGradientConteiner>
       <Title text="Informacion :" />
       <DollarCard dollar={dollar} />
-      <SummaryProducts />
-    </LinearGradient>
+      <SummaryProducts dollayToDay={dollar?.venta} />
+    </LinerGradientConteiner>
   );
 };

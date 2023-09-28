@@ -1,15 +1,15 @@
 import { useDispatch } from 'react-redux';
 import { updateProduc } from '../../../../redux/slices';
 
-export function useSubmit(producId, setSuccefull, setDisable) {
+export function useSubmit(producId, setOpenEdit, setDisable, handlePress) {
   const dispatch = useDispatch();
-  return async (spec, { resetForm }) => {
+  return async (spec) => {
     try {
       setDisable(true);
       const status = await axiosPromise(spec, dispatch, producId);
       if (status.payload === 204) {
-        setSuccefull(true);
-        resetForm();
+        setOpenEdit(false);
+        handlePress();
       } else {
         console.log('ERROR SUMBIT', status);
       }

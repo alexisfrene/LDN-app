@@ -15,3 +15,4 @@ export { Loading } from './Loading';
 export { CircleButton } from './CircleButton';
 export { ModalSize } from './ModalSize';
 export { SelectedOption } from './SelectedOption';
+export { LinerGradientConteiner } from './LinerGradient';

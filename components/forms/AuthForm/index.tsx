@@ -1,28 +1,38 @@
 import React from 'react';
 import { Formik } from 'formik';
-import { View, StyleSheet } from 'react-native';
-import { Button, Input } from 'react-native-elements';
-import { LinearGradient } from 'expo-linear-gradient';
+import { View, StyleSheet, Image } from 'react-native';
+import { Input } from 'react-native-elements';
 import { useSubmit } from './useSubmit';
 import { useState } from 'react';
+import { LinerGradientConteiner, Loading } from '../../common';
+import { NumericKeyboard } from '../../NumericKeyboard';
+import { MaterialIcons } from '@expo/vector-icons';
+import ldnLogo from '../../../assets/favicon.png';
 
 export const AuthForm = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
+  const [password, setPassword] = useState('');
+  const renderIconos = (cant: number) => {
+    const iconos = [];
+    for (let i = 0; i < cant; i++) {
+      iconos.push(
+        <MaterialIcons key={i} name="circle" size={20} color="#EBC88A" />,
+      );
+    }
+    return iconos;
+  };
 
   return (
     <Formik
       initialValues={{
-        email: '',
-        password: '',
+        email: 'ale@ldn.com',
       }}
-      onSubmit={useSubmit(setLoading, navigation)}
+      onSubmit={useSubmit(setLoading, navigation, password)}
     >
       {({ handleChange, handleSubmit, values }) => (
-        <LinearGradient
-          colors={['#fdfac7', '#fc930a']}
-          style={styles.container}
-        >
+        <LinerGradientConteiner>
           <View style={styles.innerContainer}>
+            <Image source={ldnLogo} style={{ width: 130, height: 130 }} />
             <View style={styles.inputContainer}>
               <Input
                 label="Email"
@@ -35,44 +45,38 @@ export const AuthForm = ({ navigation }) => {
               />
             </View>
             <View style={styles.inputContainer}>
-              <Input
-                label="Contraseña"
-                leftIcon={{ type: 'font-awesome', name: 'lock' }}
-                onChangeText={handleChange('password')}
-                value={values?.password}
-                secureTextEntry={true}
-                autoCapitalize={'none'}
-                inputStyle={styles.input}
-              />
+              {password.length ? (
+                <View style={{ flexDirection: 'row' }}>
+                  {renderIconos(password.length)}
+                </View>
+              ) : (
+                <View style={{ flexDirection: 'row' }}>{renderIconos(6)}</View>
+              )}
             </View>
-            <View style={styles.buttonContainer}>
-              <Button
-                buttonStyle={styles.button}
-                titleStyle={styles.buttonText}
-                title="Iniciar sesión"
-                disabled={loading}
-                onPress={() => handleSubmit()}
-              />
-            </View>
+            <NumericKeyboard
+              setPassword={setPassword}
+              password={password}
+              handleSubmit={handleSubmit}
+            />
           </View>
-        </LinearGradient>
+          <Loading isVisible={loading} />
+        </LinerGradientConteiner>
       )}
     </Formik>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   innerContainer: {
+    marginTop: 50,
     padding: 10,
     width: '100%',
     alignItems: 'center',
   },
   inputContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginVertical: 30,
     backgroundColor: '#fdfac7',
     borderRadius: 20,
     padding: 10,
