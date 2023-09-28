@@ -1,97 +1,98 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
-import { View, Image } from 'react-native';
+import { View, Image, ScrollView, Text, TextInput } from 'react-native';
+import { useState } from 'react';
 import { CardCategory } from '../Card';
-
-const pantalones = require('../../../assets/pantalones.png');
-const collar = require('../../../assets/collar.png');
-const elipsis = require('../../../assets/elipsis.png');
-const todo = require('../../../assets/todo.png');
-const sudadera = require('../../../assets/sudadera.png');
-const juguetes = require('../../../assets/juguetes.png');
-const campera = require('../../../assets/campera.png');
-const gorra = require('../../../assets/gorra.png');
-const botas = require('../../../assets/botas.png');
-const bolso = require('../../../assets/bolso.png');
-const mochila = require('../../../assets/mochila.png');
-const sabanas = require('../../../assets/sabanas.png');
-const calcetines = require('../../../assets/calcetines.png');
-const boxers = require('../../../assets/boxers.png');
-const calzas = require('../../../assets/calzas.png');
-const jeans = require('../../../assets/jeans.png');
-const sandalias = require('../../../assets/sandalias.png');
-
+import { producsCategory } from '../../../mocks';
+import { Dialog, Button, ListItem } from 'react-native-elements';
 export const SelectedCategory = ({ handlePress }) => {
+  const [openModal, setOpenModal] = useState(false);
+  const [categorySelected, setCategorySelected] = useState(null);
+  const [inputValue, setInputValue] = useState('');
+  const handleCategory = (category) => {
+    setCategorySelected(category);
+    setOpenModal(true);
+  };
   return (
-    <LinearGradient colors={['#fdfac7', '#fc930a']} className="flex-1">
-      <View className="p-2">
-        <CardCategory title="Ver todos" onPress={() => handlePress('all')}>
-          <Image source={todo} className="h-16 w-16 ml-1" />
-        </CardCategory>
-        <CardCategory
-          title="Zapatillas"
-          onPress={() => handlePress('sneakers')}
-        >
-          <MaterialCommunityIcons name="shoe-sneaker" size={64} color="black" />
-        </CardCategory>
-        <CardCategory title="Borcegos" onPress={() => handlePress('boots')}>
-          <Image source={botas} className="h-16 w-16 ml-1" />
-        </CardCategory>
-        <CardCategory title="Sandalias" onPress={() => handlePress('sandals')}>
-          <Image source={sandalias} className="h-16 w-16 ml-1" />
-        </CardCategory>
-        <CardCategory title="Remeras" onPress={() => handlePress('t-shirts')}>
-          <Ionicons name="shirt" size={64} color="black" />
-        </CardCategory>
-        <CardCategory title="Pantalones" onPress={() => handlePress('pants')}>
-          <Image source={pantalones} className="h-16 w-16 ml-1" />
-        </CardCategory>
-        <CardCategory title="Jeans" onPress={() => handlePress('jeans')}>
-          <Image source={jeans} className="h-16 w-16 ml-1" />
-        </CardCategory>
-        <CardCategory title="Buzos" onPress={() => handlePress('sweatshirts')}>
-          <Image source={sudadera} className="h-16 w-16 ml-1" />
-        </CardCategory>
-        <CardCategory title="Camperas" onPress={() => handlePress('jackets')}>
-          <Image source={campera} className="h-16 w-16 ml-1" />
-        </CardCategory>
-        <CardCategory title="Gorras" onPress={() => handlePress('cap')}>
-          <Image source={gorra} className="h-16 w-16 ml-1" />
-        </CardCategory>
-        <CardCategory title="Bolsos" onPress={() => handlePress('handbags')}>
-          <Image source={bolso} className="h-16 w-16 ml-1" />
-        </CardCategory>
-        <CardCategory title="Mochilas" onPress={() => handlePress('bags')}>
-          <Image source={mochila} className="h-16 w-16 ml-1" />
-        </CardCategory>
-        <CardCategory title="Medias" onPress={() => handlePress('socks')}>
-          <Image source={calcetines} className="h-16 w-16 ml-1" />
-        </CardCategory>
-        <CardCategory
-          title="Ropa interior"
-          onPress={() => handlePress('underwear')}
-        >
-          <Image source={boxers} className="h-16 w-16 ml-1" />
-        </CardCategory>
-        <CardCategory title="Calzas" onPress={() => handlePress('leggings')}>
-          <Image source={calzas} className="h-16 w-16 ml-1" />
-        </CardCategory>
-        <CardCategory
-          title="Accesorios"
-          onPress={() => handlePress('accessories')}
-        >
-          <Image source={collar} className="h-16 w-16 ml-1" />
-        </CardCategory>
-        <CardCategory title="Juguetes" onPress={() => handlePress('toys')}>
-          <Image source={juguetes} className="h-16 w-16 ml-1" />
-        </CardCategory>
-        <CardCategory title="Sabanas" onPress={() => handlePress('bed sheets')}>
-          <Image source={sabanas} className="h-16 w-16 ml-1" />
-        </CardCategory>
-        <CardCategory title="Otros" onPress={() => handlePress('other')}>
-          <Image source={elipsis} className="h-16 w-16 ml-1" />
-        </CardCategory>
-      </View>
-    </LinearGradient>
+    <ScrollView scrollEventThrottle={400}>
+      <LinearGradient colors={['#fdfac7', '#fc930a']} className="flex-1">
+        <View style={{ padding: 4 }}>
+          {producsCategory.map((category, index) => {
+            return (
+              <ImageIcons
+                value={category.type}
+                image={category.icon}
+                onPress={() => handleCategory(category.type)}
+                key={index}
+                title={category.title}
+              />
+            );
+          })}
+        </View>
+      </LinearGradient>
+      <Dialog isVisible={openModal} onBackdropPress={() => setOpenModal(false)}>
+        <Dialog.Title title="Filtrar : " />
+        <View style={{ flexDirection: 'row', width: 150, marginVertical: 20 }}>
+          <Text>Por talle/numero :</Text>
+          <TextInput
+            style={{
+              width: 120,
+              height: 20,
+              padding: 1,
+              backgroundColor: '#F4EAD7',
+            }}
+            placeholder="XXL.."
+            onChangeText={(text) => setInputValue(text)}
+            value={inputValue}
+          />
+        </View>
+        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+          <Button
+            title="Filtrar"
+            buttonStyle={{
+              backgroundColor: 'black',
+              borderWidth: 2,
+              borderColor: 'white',
+              borderRadius: 30,
+            }}
+            containerStyle={{
+              width: 130,
+            }}
+            titleStyle={{ fontWeight: 'bold' }}
+            onPress={() => {
+              handlePress({
+                type: categorySelected,
+                search: inputValue.toUpperCase(),
+              });
+            }}
+          />
+          <Button
+            title="Buscar todo"
+            buttonStyle={{
+              backgroundColor: 'black',
+              borderWidth: 2,
+              borderColor: 'white',
+              borderRadius: 30,
+            }}
+            containerStyle={{
+              width: 130,
+            }}
+            titleStyle={{ fontWeight: 'bold' }}
+            onPress={() => {
+              handlePress({
+                type: categorySelected,
+              });
+            }}
+          />
+        </View>
+      </Dialog>
+    </ScrollView>
+  );
+};
+
+export const ImageIcons = ({ value, title, image, onPress }) => {
+  return (
+    <CardCategory title={title} onPress={() => onPress(value)}>
+      <Image source={image} style={{ height: 75, width: 75, marginLeft: 1 }} />
+    </CardCategory>
   );
 };

@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { View, ScrollView, Pressable, FlatList } from 'react-native';
+import { View, Pressable, FlatList } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialIcons } from '@expo/vector-icons';
 import {
   downloadImage,
@@ -15,6 +14,7 @@ import {
   SelectedCategory,
   EditProducsForm,
   ModalSuccefull,
+  LinerGradientConteiner,
 } from '../../components';
 
 export const ListOfProductsScreen = () => {
@@ -24,12 +24,11 @@ export const ListOfProductsScreen = () => {
   const [producs, setProducs] = useState(false);
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.commons.loading);
-  const handlePress = async (category) => {
+  const handlePress = async (filter) => {
     dispatch(startLoading());
     const {
       payload: { data },
-    } = await dispatch(filterCategoryProducts(category));
-
+    } = await dispatch(filterCategoryProducts(filter));
     const producsWithUrls = await Promise.all(
       data.map(async (produc) => {
         let { payload } = await dispatch(
@@ -39,7 +38,6 @@ export const ListOfProductsScreen = () => {
       }),
     );
     dispatch(stopLoading());
-
     if (producsWithUrls.length > 0) {
       setSelectedProduc(producsWithUrls);
       setProducs(producsWithUrls);
@@ -58,7 +56,7 @@ export const ListOfProductsScreen = () => {
 
   return (
     <>
-      <LinearGradient colors={['#fdfac7', '#fc930a']} className="flex-1 px-1">
+      <LinerGradientConteiner>
         {producs?.length && producs[0]?.publicUrl ? (
           <FlatList
             contentContainerStyle={{
@@ -82,11 +80,9 @@ export const ListOfProductsScreen = () => {
             keyExtractor={(item) => item.id}
           />
         ) : (
-          <ScrollView scrollEventThrottle={400}>
-            <SelectedCategory handlePress={handlePress} />
-          </ScrollView>
+          <SelectedCategory handlePress={handlePress} />
         )}
-      </LinearGradient>
+      </LinerGradientConteiner>
       <EditProducsForm
         produc={selectedProduc}
         openDetail={openDetail}

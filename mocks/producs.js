@@ -1,22 +1,42 @@
+const pantalones = require('../assets/icons/pantalones.png');
+const collar = require('../assets/icons/collar.png');
+const elipsis = require('../assets/icons/elipsis.png');
+const todo = require('../assets/icons/todo.png');
+const sudadera = require('../assets/icons/sudadera.png');
+const juguetes = require('../assets/icons/juguetes.png');
+const campera = require('../assets/icons/campera.png');
+const gorra = require('../assets/icons/gorra.png');
+const botas = require('../assets/icons/botas.png');
+const bolso = require('../assets/icons/bolso.png');
+const mochila = require('../assets/icons/mochila.png');
+const sabanas = require('../assets/icons/sabanas.png');
+const calcetines = require('../assets/icons/calcetines.png');
+const boxers = require('../assets/icons/boxers.png');
+const calzas = require('../assets/icons/calzas.png');
+const jeans = require('../assets/icons/jeans.png');
+const sandalias = require('../assets/icons/sandalias.png');
+const remera = require('../assets/icons/remera.png');
+const zapatilla = require('../assets/icons/zapatilla.png');
+
 export const producsCategory = [
-  { type: 't-shirts', title: 'Remeras' },
-  { type: 'pants', title: 'Pantalones' },
-  { type: 'sneakers', title: 'Zapatillas' },
-  { type: 'sweatshirts', title: 'Buzos' },
-  { type: 'accessories', title: 'Accesorios' },
-  { type: 'toys', title: 'Juguetes' },
-  { type: 'jackets', title: 'Camperas' },
-  { type: 'cap', title: 'Gorras' },
-  { type: 'boots', title: 'Borcegos' },
-  { type: 'handbags', title: 'Bolsos' },
-  { type: 'bags', title: 'Mochilas' },
-  { type: 'bed sheets', title: 'Sabanas' },
-  { type: 'socks', title: 'Medias' },
-  { type: 'underwear', title: 'Ropa interior' },
-  { type: 'leggings', title: 'Calzas' },
-  { type: 'jeans', title: 'Jeans' },
-  { type: 'sandals', title: 'Sandalias' },
-  { type: 'other', title: 'Otros' },
+  { type: 't-shirts', title: 'Remeras', icon: remera },
+  { type: 'pants', title: 'Pantalones', icon: pantalones },
+  { type: 'sneakers', title: 'Zapatillas', icon: zapatilla },
+  { type: 'sweatshirts', title: 'Buzos', icon: sudadera },
+  { type: 'accessories', title: 'Accesorios', icon: collar },
+  { type: 'toys', title: 'Juguetes', icon: juguetes },
+  { type: 'jackets', title: 'Camperas', icon: campera },
+  { type: 'cap', title: 'Gorras', icon: gorra },
+  { type: 'boots', title: 'Borcegos', icon: botas },
+  { type: 'handbags', title: 'Bolsos', icon: bolso },
+  { type: 'bags', title: 'Mochilas', icon: mochila },
+  { type: 'bed sheets', title: 'Sabanas', icon: sabanas },
+  { type: 'socks', title: 'Medias', icon: calcetines },
+  { type: 'underwear', title: 'Ropa interior', icon: boxers },
+  { type: 'leggings', title: 'Calzas', icon: calzas },
+  { type: 'jeans', title: 'Jeans', icon: jeans },
+  { type: 'sandals', title: 'Sandalias', icon: sandalias },
+  { type: 'other', title: 'Otros', icon: elipsis },
 ];
 export const inputProducs = [
   {
@@ -58,7 +78,7 @@ export const newProduc = {
 
 export const productsSize = () => {
   let size_number = [];
-  for (let i = 1; i <= 45; i++) {
+  for (let i = 1; i <= 60; i++) {
     size_number.push(i);
   }
 
