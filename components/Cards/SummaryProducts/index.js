@@ -3,12 +3,14 @@ import { Text } from 'react-native';
 import { View } from 'react-native';
 import { supabase } from '../../../lib/supabse';
 import { useIsFocused } from '@react-navigation/native';
+import { formatNumberWithComma } from '../../../utils';
 
-export const SummaryProducts = () => {
+export const SummaryProducts = ({ dollayToDay }) => {
   const [products, setProducts] = useState('N/A');
   const [priceDollar, setPriceDollar] = useState('N/A');
   const [cantProducts, setCantProducts] = useState('N/A');
   const isFocused = useIsFocused();
+  //Todo : esto hay que moverlo
   useEffect(() => {
     const fetchProducts = async () => {
       const { data, error } = await supabase
@@ -23,14 +25,10 @@ export const SummaryProducts = () => {
           (sum, product) => sum + product.produc_price,
           0,
         );
-        const totalPriceDollar = data.reduce(
-          (sum, product) =>
-            sum + product.produc_price / product.produc_dollar_today,
-          0,
-        );
+        const totalPriceDollar = totalPrice / dollayToDay;
         setCantProducts(data.length);
         setPriceDollar(totalPriceDollar.toFixed(2));
-        setProducts(totalPrice);
+        setProducts(formatNumberWithComma(totalPrice));
       }
     };
 

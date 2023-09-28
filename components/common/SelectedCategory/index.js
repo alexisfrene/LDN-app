@@ -3,7 +3,7 @@ import { View, Image, ScrollView, Text, TextInput } from 'react-native';
 import { useState } from 'react';
 import { CardCategory } from '../Card';
 import { producsCategory } from '../../../mocks';
-import { Dialog, Button, ListItem } from 'react-native-elements';
+import { Dialog, Button } from 'react-native-elements';
 export const SelectedCategory = ({ handlePress }) => {
   const [openModal, setOpenModal] = useState(false);
   const [categorySelected, setCategorySelected] = useState(null);

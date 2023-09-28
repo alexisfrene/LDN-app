@@ -26,7 +26,7 @@ export const HomeScreen = () => {
     <LinerGradientConteiner>
       <Title text="Informacion :" />
       <DollarCard dollar={dollar} />
-      <SummaryProducts />
+      <SummaryProducts dollayToDay={dollar?.venta} />
     </LinerGradientConteiner>
   );
 };

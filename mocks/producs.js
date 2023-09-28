@@ -84,7 +84,7 @@ export const productsSize = () => {
 
   return {
     number: size_number,
-    letter: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
+    letter: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL', 'N/A'],
   };
 };
 

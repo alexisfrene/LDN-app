@@ -113,3 +113,13 @@ const year = currentDate.getFullYear();
 export const getDataFormatDMA = () => {
   return { dayOfWeek, dayOfMonth, month, year };
 };
+
+export const formatNumberWithComma = (num) => {
+  const parts = num.toString().split('.');
+  const wholePart = parts[0];
+  const decimalPart = parts[1] || '';
+
+  const formattedWholePart = wholePart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+  return formattedWholePart + (decimalPart ? `.${decimalPart}` : '');
+};

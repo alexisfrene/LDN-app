@@ -43,7 +43,6 @@ export const downloadProducImage = (path) => {
 
 export const updateProduct = async (spec) => {
   const { id, ...editColum } = spec;
-
   return await supabase.from('ldn_producs').update(editColum).eq('id', id);
 };
 

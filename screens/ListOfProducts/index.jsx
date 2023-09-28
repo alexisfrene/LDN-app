@@ -19,6 +19,7 @@ import {
 
 export const ListOfProductsScreen = () => {
   const [selectedProduc, setSelectedProduc] = useState(null);
+  const [typeSearch, setTypeSearch] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [openDetail, setOpenDetail] = useState(false);
   const [producs, setProducs] = useState(false);
@@ -41,6 +42,7 @@ export const ListOfProductsScreen = () => {
     if (producsWithUrls.length > 0) {
       setSelectedProduc(producsWithUrls);
       setProducs(producsWithUrls);
+      setTypeSearch(filter);
     } else {
       return setModalOpen(true);
     }
@@ -87,6 +89,8 @@ export const ListOfProductsScreen = () => {
         produc={selectedProduc}
         openDetail={openDetail}
         setOpenDetail={setOpenDetail}
+        typeSearch={typeSearch}
+        handlePress={handlePress}
       />
       <View>
         {producs?.length > 0 && (
