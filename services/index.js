@@ -8,4 +8,5 @@ export {
   getAllProducs,
   updateProduct,
   filterCategoryProduc,
+  productOverview,
 } from './producs';

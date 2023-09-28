@@ -1,5 +1,5 @@
 import { supabase } from '../lib/supabse';
-import { formatUrl } from '../utils';
+import { formatNumberWithComma, formatUrl } from '../utils';
 
 export const getAllProducs = async () => {
   return await supabase
@@ -55,5 +55,28 @@ export const filterCategoryProduc = async (filter) => {
     } else {
       return await getCategoryProducs(filter.type);
     }
+  }
+};
+
+export const productOverview = async (dollayToDay) => {
+  const { data, error } = await supabase
+    .from('ldn_producs')
+    .select('*')
+    .eq('produc_state', true);
+
+  if (error) {
+    console.error('Error in productOverview/services', error.message);
+  } else {
+    const totalPrice = data.reduce(
+      (sum, product) => sum + product.produc_price,
+      0,
+    );
+    const totalPriceDollar = totalPrice / dollayToDay;
+
+    return {
+      cantProducts: data.length,
+      priceInDollar: totalPriceDollar.toFixed(2),
+      totalPricePeso: formatNumberWithComma(totalPrice),
+    };
   }
 };

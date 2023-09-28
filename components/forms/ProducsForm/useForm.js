@@ -26,7 +26,7 @@ export function useForm(dollar) {
 }
 
 function getInitialValues(dollar) {
-  const dollarValue = parseFloat(dollar.venta.replace(',', '.'));
+  const dollarValue = parseFloat(dollar.venta);
   const initialValues = {
     gender: '',
     age: '',
@@ -39,7 +39,7 @@ function getInitialValues(dollar) {
     color: null,
     category: 'other',
     image_url: null,
-    dollar_today: dollarValue,
+    dollar_today: dollarValue || 0,
   };
 
   return initialValues;
