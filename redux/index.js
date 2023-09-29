@@ -1,31 +1,23 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { persistReducer, persistStore } from 'redux-persist';
+//import storage from 'redux-persist/lib/storage';
+//import { persistReducer } from 'redux-persist';
 import thunk from 'redux-thunk';
-import {
-  loginReducer,
-  commonsReducer,
-  homeReducer,
-  configReducer,
-} from './slices';
+import { loginReducer, commonsReducer } from './slices';
 
-const persistConfig = {
-  key: 'root',
-  storage: AsyncStorage,
-  whitelist: ['login', 'home'],
-};
+// const persistConfig = {
+//   key: 'root',
+//   storage,
+//   whitelist: ['login'],
+// };
 
 const rootReducer = combineReducers({
   commons: commonsReducer,
   login: loginReducer,
-  home: homeReducer,
-  config: configReducer,
 });
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+//const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: persistedReducer,
+  reducer: rootReducer,
   middleware: [thunk],
 });
-export const persistor = persistStore(store);

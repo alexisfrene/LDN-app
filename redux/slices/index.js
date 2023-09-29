@@ -1,22 +1,29 @@
 import commonsReducer, {
   startLoading,
   stopLoading,
-  setIsLogged,
-  setLogIn,
+  setPhotoUri,
+  setDollarToDay,
 } from './common';
 
-import loginReducer, { setLogin, autoLogin } from './login';
-import homeReducer, { homeParams } from './home';
-import configReducer, { getPermissions } from './config';
+import loginReducer, { setLogin } from './login';
+import producsSlice, {
+  setNewProduc,
+  setImageProduc,
+  updateProduc,
+  filterCategoryProducts,
+  downloadImage,
+} from './producs';
 
-export { loginReducer, commonsReducer, homeReducer, configReducer };
+export { loginReducer, commonsReducer, producsSlice };
 export {
   setLogin,
-  autoLogin,
   startLoading,
   stopLoading,
-  setIsLogged,
-  setLogIn,
-  homeParams,
-  getPermissions,
+  setNewProduc,
+  setImageProduc,
+  updateProduc,
+  filterCategoryProducts,
+  downloadImage,
+  setPhotoUri,
+  setDollarToDay,
 };
