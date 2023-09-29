@@ -6,14 +6,6 @@ module.exports = function (api) {
       '@babel/plugin-proposal-export-namespace-from',
       'react-native-reanimated/plugin',
       'nativewind/babel',
-      [
-        'module:react-native-dotenv',
-        {
-          envName: 'APP_ENV',
-          path: '.env',
-          moduleName: '@env',
-        },
-      ],
     ],
   };
 };
