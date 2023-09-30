@@ -1,7 +1,6 @@
 const pantalones = require('../assets/icons/pantalones.png');
 const collar = require('../assets/icons/collar.png');
 const elipsis = require('../assets/icons/elipsis.png');
-const todo = require('../assets/icons/todo.png');
 const sudadera = require('../assets/icons/sudadera.png');
 const juguetes = require('../assets/icons/juguetes.png');
 const campera = require('../assets/icons/campera.png');
@@ -18,7 +17,13 @@ const sandalias = require('../assets/icons/sandalias.png');
 const remera = require('../assets/icons/remera.png');
 const zapatilla = require('../assets/icons/zapatilla.png');
 
-export const producsCategory = [
+interface ProductCategory {
+  type: string;
+  title: string;
+  icon: string;
+}
+
+export const producsCategory: ProductCategory[] = [
   { type: 't-shirts', title: 'Remeras', icon: remera },
   { type: 'pants', title: 'Pantalones', icon: pantalones },
   { type: 'sneakers', title: 'Zapatillas', icon: zapatilla },
@@ -30,7 +35,7 @@ export const producsCategory = [
   { type: 'boots', title: 'Borcegos', icon: botas },
   { type: 'handbags', title: 'Bolsos', icon: bolso },
   { type: 'bags', title: 'Mochilas', icon: mochila },
-  { type: 'bed sheets', title: 'Sabanas', icon: sabanas },
+  { type: 'bed sheets', title: 'Sábanas', icon: sabanas },
   { type: 'socks', title: 'Medias', icon: calcetines },
   { type: 'underwear', title: 'Ropa interior', icon: boxers },
   { type: 'leggings', title: 'Calzas', icon: calzas },
@@ -38,7 +43,15 @@ export const producsCategory = [
   { type: 'sandals', title: 'Sandalias', icon: sandalias },
   { type: 'other', title: 'Otros', icon: elipsis },
 ];
-export const inputProducs = [
+
+interface InputProduct {
+  name: string;
+  placeholder: string;
+  title: string;
+  type?: string;
+}
+
+export const inputProducs: InputProduct[] = [
   {
     name: 'name',
     placeholder: 'Zapatilla Deportiva Nike..',
@@ -51,14 +64,33 @@ export const inputProducs = [
     type: 'numeric',
   },
   { name: 'brand', placeholder: 'Nike ...', title: 'Marca :' },
-  { name: 'color', placeholder: 'Amarrillo con blanco...', title: 'Color :' },
+  { name: 'color', placeholder: 'Amarillo con blanco...', title: 'Color :' },
   {
     name: 'description',
     placeholder: 'Zapatilla modelo ancho...',
-    title: 'Descripcion :',
+    title: 'Descripción :',
   },
 ];
-export const newProduc = {
+
+export interface NewProduct {
+  user: string;
+  produc_name: string;
+  produc_brand: string;
+  produc_style: string;
+  produc_size: string;
+  produc_description: string;
+  produc_price: number;
+  produc_color: string;
+  produc_category: string;
+  produc_image_url: string;
+  produc_age: string;
+  produc_gender: string;
+  produc_state: boolean;
+  produc_stock: number;
+  produc_discount: string;
+}
+
+export const newProduc: NewProduct = {
   user: 'id del usuario',
   produc_name: 'Nombre del producto OBLIGATORIO',
   produc_brand: 'marca del producto typarlo',
@@ -76,7 +108,12 @@ export const newProduc = {
   produc_discount: 'asds',
 };
 
-export const productsSize = () => {
+interface ProductSizes {
+  number: number[];
+  letter: string[];
+}
+
+export const productsSize = (): ProductSizes => {
   let size_number = [];
   for (let i = 1; i <= 60; i++) {
     size_number.push(i);
@@ -88,8 +125,14 @@ export const productsSize = () => {
   };
 };
 
-export const selectedOption = [
-  { title: 'Genero :', options: ['Masculino', 'Femenino'], change: 'gender' },
+export interface SelectedOption {
+  title: string;
+  options: string[];
+  change: string;
+}
+
+export const selectedOption: SelectedOption[] = [
+  { title: 'Género :', options: ['Masculino', 'Femenino'], change: 'gender' },
   { title: 'Edad :', options: ['Niño', 'Adulto'], change: 'age' },
   {
     title: 'Estilo :',

@@ -14,7 +14,7 @@ const Tab = createBottomTabNavigator();
 const TabScreens = () => {
   return (
     <Tab.Navigator
-      screenOptions={{ headerShown: false, cardShadowEnabled: false }}
+      screenOptions={{ headerShown: false }}
       tabBar={(props) => <ButtonTab {...props} />}
     >
       <Tab.Screen name="Home" component={HomeScreen} />
@@ -27,9 +27,7 @@ const TabScreens = () => {
 export const Screens = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{ headerShown: false, cardShadowEnabled: false }}
-      >
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Inicio" component={TabScreens} />
         <Stack.Screen name="Camara" component={TakePicture} />

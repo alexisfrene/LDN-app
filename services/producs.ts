@@ -7,14 +7,17 @@ export const getAllProducs = async () => {
     .select('*')
     .not('produc_state', 'eq', false);
 };
-export const getCategoryProducs = async (category) => {
+export const getCategoryProducs = async (category: string) => {
   return await supabase
     .from('ldn_producs')
     .select('*')
     .eq('produc_category', category)
     .not('produc_state', 'eq', false);
 };
-export const getCategoryProducsAndSize = async (category, size) => {
+export const getCategoryProducsAndSize = async (
+  category: string,
+  size: string,
+) => {
   return await supabase
     .from('ldn_producs')
     .select('*')
@@ -23,7 +26,10 @@ export const getCategoryProducsAndSize = async (category, size) => {
     .eq('produc_size', size);
 };
 
-export const uploadImageProduc = async (image_url, category) => {
+export const uploadImageProduc = async (
+  image_url: string,
+  category: string,
+) => {
   const { formData, filePath } = formatUrl(image_url, category);
 
   return await supabase.storage.from('ldn_bucket').upload(filePath, formData);
@@ -33,7 +39,7 @@ export const uploadProduc = async (spec) => {
   return await supabase.from('ldn_producs').insert(spec);
 };
 
-export const downloadProducImage = (path) => {
+export const downloadProducImage = (path: string) => {
   const { data: publicUrl } = supabase.storage
     .from('ldn_bucket')
     .getPublicUrl(path);
@@ -58,7 +64,7 @@ export const filterCategoryProduc = async (filter) => {
   }
 };
 
-export const productOverview = async (dollayToDay) => {
+export const productOverview = async (dollayToDay: number) => {
   const { data, error } = await supabase
     .from('ldn_producs')
     .select('*')

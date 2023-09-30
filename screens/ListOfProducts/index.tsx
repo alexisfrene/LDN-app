@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { View, Pressable, FlatList } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -17,15 +17,25 @@ import {
   LinerGradientConteiner,
 } from '../../components';
 
-export const ListOfProductsScreen = () => {
-  const [selectedProduc, setSelectedProduc] = useState(null);
-  const [typeSearch, setTypeSearch] = useState(null);
+interface Product {
+  id: string;
+  produc_name: string;
+  produc_image_url: string;
+  publicUrl: string;
+  produc_price: number;
+  produc_size: string;
+}
+
+export const ListOfProductsScreen: React.FC = () => {
+  const [selectedProduc, setSelectedProduc] = useState<Product | null>(null);
+  const [typeSearch, setTypeSearch] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [openDetail, setOpenDetail] = useState(false);
-  const [producs, setProducs] = useState(false);
+  const [producs, setProducs] = useState<Product[]>([]);
   const dispatch = useDispatch();
-  const loading = useSelector((state) => state.commons.loading);
-  const handlePress = async (filter) => {
+  const loading = useSelector((state: any) => state.commons.loading);
+
+  const handlePress = async (filter: string) => {
     dispatch(startLoading());
     const {
       payload: { data },
@@ -40,26 +50,30 @@ export const ListOfProductsScreen = () => {
     );
     dispatch(stopLoading());
     if (producsWithUrls.length > 0) {
-      setSelectedProduc(producsWithUrls);
+      setSelectedProduc(producsWithUrls[0]);
       setProducs(producsWithUrls);
       setTypeSearch(filter);
     } else {
       return setModalOpen(true);
     }
   };
-  const openDetailModal = (id) => {
+
+  const openDetailModal = (id: string) => {
     const select = producs.find((produc) => produc.id === id);
-    setSelectedProduc({ ...select });
-    setOpenDetail(true);
+    if (select) {
+      setSelectedProduc({ ...select });
+      setOpenDetail(true);
+    }
   };
+
   const resetProducts = () => {
-    setProducs(null);
+    setProducs([]);
   };
 
   return (
     <>
       <LinerGradientConteiner>
-        {producs?.length && producs[0]?.publicUrl ? (
+        {producs.length && producs[0]?.publicUrl ? (
           <FlatList
             contentContainerStyle={{
               justifyContent: 'center',
@@ -93,10 +107,17 @@ export const ListOfProductsScreen = () => {
         handlePress={handlePress}
       />
       <View>
-        {producs?.length > 0 && (
+        {producs.length > 0 && (
           <Pressable
             onPress={resetProducts}
-            className="absolute bottom-1 rounded-full bg-amber-300 p-4 m-3 active:bg-amber-200"
+            style={{
+              position: 'absolute',
+              bottom: 1,
+              borderRadius: 999,
+              backgroundColor: '#FFC107',
+              padding: 16,
+              margin: 16,
+            }}
           >
             <MaterialIcons name="keyboard-return" size={30} color="black" />
           </Pressable>
@@ -107,7 +128,9 @@ export const ListOfProductsScreen = () => {
         isVisible={modalOpen}
         setSuccefull={setModalOpen}
       >
-        <View className="flex flex-row justify-center">
+        <View
+          style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}
+        >
           <MaterialIcons name="warning" size={70} color="black" />
         </View>
       </ModalSuccefull>
