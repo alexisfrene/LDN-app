@@ -11,8 +11,6 @@
     "build": "eas build -p android --profile preview"
   },
   "dependencies": {
-    "@cloudinary/react": "^1.11.2",
-    "@cloudinary/url-gen": "^1.14.0",
     "@expo/vector-icons": "^13.0.0",
     "@react-native-async-storage/async-storage": "1.18.2",
     "@react-navigation/bottom-tabs": "^6.5.8",
@@ -23,8 +21,6 @@
     "@rneui/themed": "^0.0.0-edge.2",
     "@supabase/supabase-js": "^2.31.0",
     "axios": "^1.5.1",
-    "cloudinary": "^1.41.0",
-    "cloudinary-react-native": "^0.1.2",
     "expo": "^49.0.6",
     "expo-camera": "~13.4.2",
     "expo-dev-client": "~2.4.8",
@@ -36,7 +32,6 @@
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
     "formik": "^2.4.3",
-    "nativewind": "^2.0.11",
     "react": "18.2.0",
     "react-native": "0.72.4",
     "react-native-gesture-handler": "~2.12.0",

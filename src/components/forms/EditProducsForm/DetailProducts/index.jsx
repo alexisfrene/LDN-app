@@ -1,10 +1,17 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Image, Text, View, Pressable } from 'react-native';
+import {
+  Image,
+  Text,
+  View,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+} from 'react-native';
 import { Dialog, Divider, ListItem } from '@rneui/themed';
 import { generateInfoProduc } from '../../../../utils';
-import { MarkSoldModa } from '../MarkSoldModal';
+import { MarkSoldModal } from '../MarkSoldModal';
 import {
   startLoading,
   stopLoading,
@@ -21,7 +28,8 @@ export const DetailProducts = ({
   const [expanded, setExpanded] = useState(false);
   const dispatch = useDispatch();
   const { mainInfo, moreInfo } = generateInfoProduc(produc);
-  const handleMarckSold = async (produc) => {
+
+  const handleMarkSold = async (produc) => {
     dispatch(startLoading());
     await dispatch(updateProduc({ id: produc.id, produc_state: false }));
     dispatch(stopLoading());
@@ -31,7 +39,7 @@ export const DetailProducts = ({
 
   return (
     <Dialog isVisible={openDetail} onBackdropPress={() => setOpenDetail(false)}>
-      <View className="flex flex-row justify-between">
+      <View style={styles.header}>
         <Dialog.Title
           title={`${produc?.produc_name}(${produc?.produc_code})`}
         />
@@ -42,59 +50,53 @@ export const DetailProducts = ({
           onPress={() => setOpenEdit(true)}
         />
       </View>
-      <View style={{ alignItems: 'center' }}>
-        <Image src={produc?.publicUrl} className="h-[250] w-[250]" />
+      <View style={styles.imageContainer}>
+        <Image source={{ uri: produc?.publicUrl }} style={styles.image} />
       </View>
-      {mainInfo.map((item, i) => {
-        return (
+      <ScrollView>
+        {mainInfo.map((item, i) => (
           <InfoRowDialog
             key={i}
             textLeft={item.textLeft}
             textRigth={item.textRigth}
           />
-        );
-      })}
-      <ListItem.Accordion
-        content={
-          <>
+        ))}
+        <ListItem.Accordion
+          content={
             <ListItem.Content>
               <ListItem.Title>Mas informacion</ListItem.Title>
             </ListItem.Content>
-          </>
-        }
-        isExpanded={expanded}
-        onPress={() => {
-          setExpanded(!expanded);
-        }}
-      >
-        <ListItem bottomDivider>
-          <ListItem.Content>
-            {moreInfo.map((item, i) => {
-              return (
+          }
+          isExpanded={expanded}
+          onPress={() => setExpanded(!expanded)}
+        >
+          <ListItem bottomDivider>
+            <ListItem.Content>
+              {moreInfo.map((item, i) => (
                 <InfoRowDialog
                   key={i}
                   textLeft={item.textLeft}
                   textRigth={item.textRigth}
                 />
-              );
-            })}
-          </ListItem.Content>
-        </ListItem>
-      </ListItem.Accordion>
+              ))}
+            </ListItem.Content>
+          </ListItem>
+        </ListItem.Accordion>
+      </ScrollView>
       {produc?.produc_state && (
         <Pressable
-          className="flex flex-row justify-evenly bg-green-500 rounded-xl py-1 active:bg-green-300"
+          style={styles.markSoldButton}
           onPress={() => setMarkSold(true)}
         >
-          <Text className="font-bold">Marcar como vendido</Text>
+          <Text style={styles.markSoldButtonText}>Marcar como vendido</Text>
           <MaterialIcons name="add-business" size={24} color="black" />
         </Pressable>
       )}
-      <MarkSoldModa
+      <MarkSoldModal
         markSold={markSold}
         setMarkSold={setMarkSold}
         produc={produc}
-        handleMarckSold={handleMarckSold}
+        handleMarkSold={handleMarkSold}
       />
     </Dialog>
   );
@@ -102,10 +104,45 @@ export const DetailProducts = ({
 
 const InfoRowDialog = ({ textLeft, textRigth }) => {
   return (
-    <View className="flex flex-row space-x-2">
-      <Text className="w-20 font-semibold">{textLeft}</Text>
+    <View style={styles.infoRow}>
+      <Text style={styles.infoLeft}>{textLeft}</Text>
       <Divider orientation="vertical" />
       <Text>{textRigth}</Text>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  imageContainer: {
+    alignItems: 'center',
+  },
+  image: {
+    height: 250,
+    width: 250,
+  },
+  infoRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 8,
+  },
+  infoLeft: {
+    width: 70,
+    fontWeight: 'bold',
+  },
+  markSoldButton: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    backgroundColor: '#4CAF50',
+    borderRadius: 8,
+    paddingVertical: 8,
+    marginVertical: 16,
+  },
+  markSoldButtonText: {
+    fontWeight: 'bold',
+    color: 'white',
+  },
+});
