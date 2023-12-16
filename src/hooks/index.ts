@@ -1,0 +1,1 @@
+export { useTakePicture } from './useTakePicture';
