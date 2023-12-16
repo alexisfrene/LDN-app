@@ -1,5 +1,8 @@
 {
   "expo": {
+    "experiments": {
+      "tsconfigPaths": true
+    },
     "plugins": [
       [
         "expo-camera",
