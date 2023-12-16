@@ -1,15 +1,7 @@
 import React, { useState } from 'react';
-import {
-  ScrollView,
-  View,
-  Text,
-  TextInput,
-  Image,
-  StyleSheet,
-  Pressable,
-} from 'react-native';
+import { ScrollView, View, Image, StyleSheet } from 'react-native';
+import { Dialog, Button, Input } from '@rneui/themed';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Dialog, Button } from '@rneui/themed';
 import { producsCategory } from '../../../mocks';
 import { CardCategory } from '../Card';
 
@@ -39,16 +31,15 @@ export const SelectedCategory = ({ handlePress }) => {
         </View>
       </LinearGradient>
       <Dialog isVisible={openModal} onBackdropPress={() => setOpenModal(false)}>
-        <Dialog.Title title="Filtrar : " />
-        <View style={styles.filterContainer}>
-          <Text>Por talle/numero :</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="XXL.."
-            onChangeText={(text) => setInputValue(text)}
-            value={inputValue}
-          />
-        </View>
+        <Input
+          style={styles.input}
+          placeholder="33.."
+          onChangeText={(text) => setInputValue(text)}
+          value={inputValue}
+          autoFocus
+          keyboardType="numeric"
+        />
+
         <View style={styles.buttonContainer}>
           <Button
             title="Filtrar"
@@ -96,15 +87,10 @@ const styles = StyleSheet.create({
   },
   filterContainer: {
     flexDirection: 'row',
-    width: 150,
     marginVertical: 20,
-  },
-  input: {
     width: 120,
-    height: 20,
-    padding: 1,
-    backgroundColor: '#F4EAD7',
   },
+  input: {},
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'center',

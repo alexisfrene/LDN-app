@@ -2,7 +2,7 @@ export { TakePicture } from './Camera';
 export { DollarCard, SummaryProducts } from './Cards';
 export { NumericKeyboard } from './NumericKeyboard';
 export { DownloadsImages } from './DownloadsImages';
-export { EditProducsForm, ProducsForm } from './forms';
+export { EditProducsForm } from './forms';
 export {
   Button,
   ImageMineature,
@@ -15,4 +15,6 @@ export {
   Loading,
   ImageViewer,
   LinerGradientConteiner,
+  SelectedOption,
+  ModalSize,
 } from './common';

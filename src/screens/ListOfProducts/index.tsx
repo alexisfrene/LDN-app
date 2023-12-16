@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Pressable, FlatList, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';
+
 import {
   downloadImage,
   filterCategoryProducts,
@@ -38,20 +39,12 @@ export const ListOfProductsScreen = () => {
   const loading = useSelector((state: any) => state.commons.loading);
 
   const handlePress = async (filter: string) => {
-    dispatch(startLoading());
     try {
+      dispatch(startLoading());
       const {
         payload: { data },
       } = await dispatch(filterCategoryProducts(filter));
-      const producsWithUrls = await Promise.all(
-        data.map(async (produc) => {
-          let { payload } = await dispatch(
-            downloadImage(produc.produc_image_url),
-          );
-          return { publicUrl: payload.publicUrl, ...produc };
-        }),
-      );
-      setProducs(producsWithUrls);
+      setProducs(data);
       setTypeSearch(filter);
     } catch (error) {
       setModalOpen(true);
@@ -75,15 +68,14 @@ export const ListOfProductsScreen = () => {
   return (
     <>
       <LinerGradientConteiner>
-        {producs.length && producs[0]?.publicUrl ? (
+        {producs.length ? (
           <FlatList
-            contentContainerStyle={styles.flatListContainer}
             numColumns={3}
             data={producs}
             renderItem={({ item }) => (
               <ImageMineature
                 title={item.produc_name}
-                imageURL={item.publicUrl}
+                imageURL={item.produc_image_url}
                 price={item.produc_price}
                 size={item.produc_size}
                 onPress={() => openDetailModal(item.id)}
@@ -91,6 +83,7 @@ export const ListOfProductsScreen = () => {
               />
             )}
             keyExtractor={(item) => item.id}
+            contentContainerStyle={{ paddingVertical: 10 }}
           />
         ) : (
           <SelectedCategory handlePress={handlePress} />
@@ -103,11 +96,9 @@ export const ListOfProductsScreen = () => {
         typeSearch={typeSearch}
         handlePress={handlePress}
       />
-
       {/* <View style={styles.downloadButtonContainer}>
         <DownloadsImages /> 
       </View> */}
-
       {producs.length > 0 && (
         <Pressable onPress={resetProducts} style={styles.resetButtonContainer}>
           <MaterialIcons name="keyboard-return" size={30} color="black" />
@@ -130,8 +121,7 @@ export const ListOfProductsScreen = () => {
 
 const styles = StyleSheet.create({
   flatListContainer: {
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
+    justifyContent: 'space-evenly',
   },
   downloadButtonContainer: {
     position: 'absolute',

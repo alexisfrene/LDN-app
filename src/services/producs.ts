@@ -25,29 +25,26 @@ export const getCategoryProducsAndSize = async (
     .not('produc_state', 'eq', false)
     .eq('produc_size', size);
 };
-//Mover a cloudinary
 export const uploadImageProduc = async (
   image_url: string,
   category: string,
 ) => {
-  const { formData } = formatUrl(image_url, category);
-
-  const cloudinaryURL = 'https://api.cloudinary.com/v1_1/ldn-img/image/upload';
-
   try {
+    const { formData, filePath } = formatUrl(image_url, category);
+    const cloudinaryURL =
+      'https://api.cloudinary.com/v1_1/ldn-img/image/upload';
     const response = await fetch(cloudinaryURL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
       body: formData,
-    });
-
-    console.log('Respuesta de Cloudinary:', response);
+    }).then(async (res) => await res.json());
+    if (response.public_id === `ldn-images/${filePath}`) {
+      return `ldn-images/${filePath}`;
+    } else {
+      console.error('ERROR EN uploadImageProduc');
+    }
   } catch (error) {
     console.error('Error al subir la imagen a Cloudinary:', error);
   }
-  //  return await supabase.storage.from('ldn_bucket').upload(filePath, formData);
 };
 
 export const uploadProduc = async (spec) => {

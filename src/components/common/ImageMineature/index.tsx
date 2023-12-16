@@ -1,70 +1,56 @@
+import { getImageByCloudinary } from '@/lib';
+import { Image } from '@rneui/themed';
 import React from 'react';
-import { View, Text, Image, Pressable, StyleSheet } from 'react-native';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
 
 export const ImageMineature = ({ title, imageURL, onPress, price, size }) => {
-  const imgixParams = {
-    w: 100,
-    h: 100,
-    fit: 'crop',
-    auto: 'format',
-  };
-  const loadImage = `${imageURL}?${new URLSearchParams(imgixParams)}`;
-
   return (
     <Pressable onPress={onPress} style={styles.container}>
-      <View>
-        <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
-          {title}
-        </Text>
-        {imageURL && <Image source={{ uri: loadImage }} style={styles.image} />}
-      </View>
-
-      <Text style={styles.sizeText}>
-        {size !== 'Sin especificar' ? size.toUpperCase() : 'N/A'}
+      <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
+        {title}
       </Text>
-
-      <Text style={styles.priceText}>{`$ ${price}`}</Text>
+      {imageURL && (
+        <Image
+          source={{ uri: getImageByCloudinary(imageURL) }}
+          style={styles.image}
+        />
+      )}
+      <View style={styles.details}>
+        <Text style={styles.sizeText}>
+          {size !== 'Sin especificar' ? size.toUpperCase() : 'N/A'}
+        </Text>
+        <Text style={styles.priceText}>{`$ ${price}`}</Text>
+      </View>
     </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    marginVertical: 1,
-    marginHorizontal: 0.5,
-    borderWidth: 2,
-    borderColor: '#FFC107',
-    position: 'relative',
-  },
+  container: { flex: 1, margin: 5 },
   title: {
     backgroundColor: '#FFC107',
     padding: 1,
+    marginBottom: 5,
     fontWeight: 'bold',
   },
   image: {
-    width: 125,
-    height: 125,
+    aspectRatio: 1,
+    width: '100%',
+    flex: 1,
+  },
+  details: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: '#FFC107',
   },
   sizeText: {
-    position: 'absolute',
-    bottom: 1,
-    left: 0,
-    backgroundColor: '#FFECB8',
-    borderWidth: 1,
-    borderColor: '#FFC107',
-    padding: 0.5,
+    fontSize: 16,
     fontWeight: 'bold',
-    fontSize: 14,
+    color: '#333',
   },
   priceText: {
-    position: 'absolute',
-    bottom: 1,
-    right: 0,
-    backgroundColor: '#FFC107',
-    borderWidth: 1,
-    borderColor: '#FFC107',
-    padding: 0.5,
+    fontSize: 16,
     fontWeight: 'bold',
-    fontSize: 14,
+    color: 'green',
   },
 });

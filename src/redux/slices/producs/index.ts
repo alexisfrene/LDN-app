@@ -21,7 +21,19 @@ const initialState: State = {
 };
 
 interface Spec {
-  id: string;
+  produc_gender: string;
+  produc_age: string;
+  produc_style: string;
+  produc_brand: string;
+  produc_size: string;
+  produc_name: string;
+  produc_description: string;
+  produc_price: string;
+  produc_color: string;
+  produc_category: string;
+  produc_image_url: string;
+  produc_dollar_today: number;
+  user: string;
 }
 
 export const updateProduc = createAsyncThunk(
@@ -31,7 +43,6 @@ export const updateProduc = createAsyncThunk(
       const res = await updateProduct(spec);
       return res.status;
     } catch (error) {
-      console.log('producs/updateProduc', error);
       throw new Error('Error updating product');
     }
   },
@@ -44,7 +55,6 @@ export const setNewProduc = createAsyncThunk(
       const res = await uploadProduc(spec);
       return res.status;
     } catch (error) {
-      console.log('producs/setNewProduc', error);
       throw new Error('Error setting new product');
     }
   },
@@ -56,13 +66,12 @@ export const setImageProduc = createAsyncThunk(
     const { image_url, category } = spec;
     try {
       if (image_url) {
-        let { data } = await uploadImageProduc(image_url, category);
-        return { image_url: data?.path };
+        let res = await uploadImageProduc(image_url, category);
+        return { image_url: res };
       } else {
         return { image_url: null };
       }
     } catch (err) {
-      console.log('producs/setImageProduc', err);
       throw new Error('Error setting image for product');
     }
   },
@@ -70,12 +79,11 @@ export const setImageProduc = createAsyncThunk(
 
 export const filterCategoryProducts = createAsyncThunk(
   'producs/filterCategoryProducts',
-  async (spec: Spec) => {
+  async (spec: string) => {
     try {
       const res = await filterCategoryProduc(spec);
       return res;
     } catch (error) {
-      console.log('producs/filterCategoryProducts', error);
       throw new Error('Error filtering products by category');
     }
   },
@@ -88,7 +96,6 @@ export const downloadImage = createAsyncThunk(
       const publicUrl = downloadProducImage(spec);
       return publicUrl;
     } catch (error) {
-      console.log('producs/downloadImage', error);
       throw new Error('Error downloading image');
     }
   },

@@ -5,7 +5,7 @@ interface Values {
 }
 
 export const pickImage = async (
-  setImage: (uri: string) => void,
+  setImage: (image: string) => void,
   values: Values,
   closeModal: (flag: boolean) => void,
 ) => {

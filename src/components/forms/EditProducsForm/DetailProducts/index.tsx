@@ -9,7 +9,7 @@ import {
   ScrollView,
   StyleSheet,
 } from 'react-native';
-import { Dialog, Divider, ListItem } from '@rneui/themed';
+import { Dialog, ListItem } from '@rneui/themed';
 import { generateInfoProduc } from '../../../../utils';
 import { MarkSoldModal } from '../MarkSoldModal';
 import {
@@ -17,6 +17,7 @@ import {
   stopLoading,
   updateProduc,
 } from '../../../../redux/slices';
+import { getImageByCloudinary } from '@/lib';
 
 export const DetailProducts = ({
   produc,
@@ -51,7 +52,10 @@ export const DetailProducts = ({
         />
       </View>
       <View style={styles.imageContainer}>
-        <Image source={{ uri: produc?.publicUrl }} style={styles.image} />
+        <Image
+          source={{ uri: getImageByCloudinary(produc.produc_image_url) }}
+          style={styles.image}
+        />
       </View>
       <ScrollView>
         {mainInfo.map((item, i) => (
@@ -106,7 +110,6 @@ const InfoRowDialog = ({ textLeft, textRigth }) => {
   return (
     <View style={styles.infoRow}>
       <Text style={styles.infoLeft}>{textLeft}</Text>
-      <Divider orientation="vertical" />
       <Text>{textRigth}</Text>
     </View>
   );
@@ -130,7 +133,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   infoLeft: {
-    width: 70,
+    width: 100,
     fontWeight: 'bold',
   },
   markSoldButton: {

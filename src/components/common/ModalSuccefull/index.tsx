@@ -4,7 +4,7 @@ import { Text } from 'react-native';
 
 interface ModalSuccefullProps {
   title: string;
-  menssage: string;
+  menssage?: string;
   isVisible: boolean;
   setSuccefull: (isVisible: boolean) => void;
   children?: ReactNode;

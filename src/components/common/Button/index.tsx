@@ -1,39 +1,39 @@
 import React from 'react';
-import { Pressable, Text, StyleSheet, ViewStyle } from 'react-native';
+import { Button as ButtonRneui } from '@rneui/themed';
 
 interface ButtonProps {
   onPress: () => void;
   text: string;
   disable?: boolean;
+  icon?: string;
 }
 
 export const Button: React.FC<ButtonProps> = ({
   onPress,
   text,
   disable = false,
+  icon,
 }) => {
-  const buttonStyles: ViewStyle = {
-    backgroundColor: disable ? '#B0B0B0' : '#FFD700',
-    height: 48,
-    borderRadius: 8,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginBottom: 12,
-    marginHorizontal: 4,
-  };
-
   return (
-    <Pressable style={buttonStyles} onPress={onPress} disabled={disable}>
-      <Text style={styles.buttonText}>{text}</Text>
-    </Pressable>
+    <ButtonRneui
+      title={text}
+      onPress={onPress}
+      loadingProps={{ size: 'small', color: 'white' }}
+      buttonStyle={{
+        backgroundColor: '#E6B320',
+        borderRadius: 5,
+      }}
+      titleStyle={{ fontWeight: 'bold', fontSize: 15 }}
+      containerStyle={{
+        height: 50,
+      }}
+      icon={{
+        name: icon,
+        type: 'font-awesome',
+        size: 15,
+        color: 'white',
+      }}
+      disabled={disable}
+    />
   );
 };
-
-const styles = StyleSheet.create({
-  buttonText: {
-    textAlign: 'center',
-    fontSize: 18,
-    fontWeight: '600',
-    padding: 8,
-  },
-});

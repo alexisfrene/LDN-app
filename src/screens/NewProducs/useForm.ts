@@ -25,7 +25,7 @@ export function useForm(dollar) {
   return { initialValues, validate };
 }
 
-function getInitialValues(dollar) {
+function getInitialValues(dollar: { venta: string }) {
   const dollarValue = parseFloat(dollar.venta);
   const initialValues = {
     gender: '',

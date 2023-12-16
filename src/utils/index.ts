@@ -2,17 +2,19 @@ export const formatUrl = (image_url, category) => {
   if (!!image_url) {
     const fileExt = image_url.split('.').pop();
     const fileName = image_url.replace(/^.*[\\\/]/, '');
-    const filePath = `ldn-images/${category}/${Date.now()}`;
+    const filePath = `${category}/${Date.now()}`;
     const formData = new FormData();
     const photo = {
       uri: image_url,
       name: fileName,
-      type: `image/${fileExt}`,
     };
-    formData.append('file', photo);
+    formData.append('file', photo.uri, photo.name);
     formData.append('public_id', filePath);
-    formData.append('api_key', '733783188277347');
-    formData.append('upload_preset', 'ldn_preset');
+    formData.append('api_key', process.env.EXPO_PUBLIC_CLOUDINARY_API_KEY);
+    formData.append(
+      'upload_preset',
+      process.env.EXPO_PUBLIC_CLOUDINARY_UPLOAD_PRESET,
+    );
 
     return { formData, filePath };
   } else {

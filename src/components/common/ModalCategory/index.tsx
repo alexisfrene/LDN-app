@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Text, View, Modal, ScrollView, StyleSheet } from 'react-native';
-import { CheckBox, CheckBoxProps } from '@rneui/themed';
+import { CheckBox } from '@rneui/themed';
 import { producsCategory } from '../../../mocks';
 import { Button } from '../Button';
 
