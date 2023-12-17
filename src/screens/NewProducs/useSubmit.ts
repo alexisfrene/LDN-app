@@ -77,8 +77,12 @@ async function axiosPromise(spec: SpecParams, dispatch: any) {
     ...newData,
     image_url,
   });
-  const data = await dispatch(setNewProduc(apiSpec));
-  return data;
+  if (image_url) {
+    const data = await dispatch(setNewProduc(apiSpec));
+    return data;
+  } else {
+    return { payload: 400 };
+  }
 }
 
 function transformSpec(spec: SpecParams): Spec {
