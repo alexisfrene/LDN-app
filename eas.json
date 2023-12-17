@@ -17,6 +17,8 @@
         "buildType": "apk"
       },
       "env": {
+        " EXPO_PUBLIC_CLOUDINARY_API_KEY": "733783188277347",
+        "EXPO_PUBLIC_CLOUDINARY_UPLOAD_PRESET": "ldn_preset",
         "EXPO_PUBLIC_SUPABASE_URL": "https://zswiaehagcrvvuvlxsmg.supabase.co",
         "EXPO_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpzd2lhZWhhZ2NydnZ1dmx4c21nIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTA5OTI2OTQsImV4cCI6MjAwNjU2ODY5NH0.nMOEiWsiQwCogEFq4yynUwTxRxd9gMnKZLCnvahoKh0"
       }

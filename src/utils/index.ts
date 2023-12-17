@@ -6,9 +6,10 @@ export const formatUrl = (image_url, category) => {
     const formData = new FormData();
     const photo = {
       uri: image_url,
+      type: `ìmage/${fileExt}`,
       name: fileName,
     };
-    formData.append('file', photo.uri, photo.name);
+    formData.append('file', photo);
     formData.append('public_id', filePath);
     formData.append('api_key', process.env.EXPO_PUBLIC_CLOUDINARY_API_KEY);
     formData.append(

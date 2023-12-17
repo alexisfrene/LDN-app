@@ -11,8 +11,8 @@ import 'react-native-url-polyfill/auto';
 import 'expo-dev-client';
 import { Provider } from 'react-redux';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { store } from './redux';
-import { Screens } from './screens';
+import { store } from './src/redux';
+import { Screens } from './src/screens';
 
 function App() {
   return (

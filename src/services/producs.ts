@@ -29,15 +29,14 @@ export const uploadImageProduc = async (
   image_url: string,
   category: string,
 ) => {
+  const cloudinaryURL = 'https://api.cloudinary.com/v1_1/ldn-img/image/upload';
+  const { formData, filePath } = formatUrl(image_url, category);
   try {
-    const { formData, filePath } = formatUrl(image_url, category);
-    const cloudinaryURL =
-      'https://api.cloudinary.com/v1_1/ldn-img/image/upload';
     const response = await fetch(cloudinaryURL, {
       method: 'POST',
       body: formData,
-    }).then(async (res) => await res.json());
-    if (response.public_id === `ldn-images/${filePath}`) {
+    });
+    if (response.ok) {
       return `ldn-images/${filePath}`;
     } else {
       console.error('ERROR EN uploadImageProduc');

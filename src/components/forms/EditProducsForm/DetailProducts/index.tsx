@@ -53,7 +53,7 @@ export const DetailProducts = ({
       </View>
       <View style={styles.imageContainer}>
         <Image
-          source={{ uri: getImageByCloudinary(produc.produc_image_url) }}
+          source={{ uri: getImageByCloudinary(produc?.produc_image_url) }}
           style={styles.image}
         />
       </View>
